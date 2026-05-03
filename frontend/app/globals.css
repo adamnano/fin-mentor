@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* ── CSS Variables: Light (default) ───────────────────────────── */
+  :root {
+    color-scheme: light;
+    --surface:      #f5f5f5;
+    --surface-1:    #ffffff;
+    --surface-2:    #eeeeee;
+    --surface-3:    #e5e5e5;
+    --card-bg:      #ffffff;
+    --card-border:  rgba(0, 0, 0, 0.08);
+    --card-border-h:rgba(0, 0, 0, 0.15);
+    --card-shadow:  0 8px 32px rgba(0, 0, 0, 0.06);
+    --text-base:    #111111;
+    --border-subtle:rgba(0, 0, 0, 0.07);
+    --bg-glass:     rgba(0, 0, 0, 0.04);
+    --scrollbar:    rgba(0, 0, 0, 0.15);
+    --range-track:  rgba(0, 0, 0, 0.12);
+    --tooltip-bg:   #ffffff;
+    --tooltip-border:rgba(0,0,0,0.12);
+  }
+
+  /* ── CSS Variables: Dark ──────────────────────────────────────── */
+  html.dark {
+    color-scheme: dark;
+    --surface:      #0a0a0a;
+    --surface-1:    #111111;
+    --surface-2:    #1a1a1a;
+    --surface-3:    #242424;
+    --card-bg:      #1a1a1a;
+    --card-border:  rgba(255, 255, 255, 0.07);
+    --card-border-h:rgba(255, 255, 255, 0.12);
+    --card-shadow:  0 8px 32px rgba(0, 0, 0, 0.4);
+    --text-base:    #ffffff;
+    --border-subtle:rgba(255, 255, 255, 0.06);
+    --bg-glass:     rgba(255, 255, 255, 0.04);
+    --scrollbar:    rgba(255, 255, 255, 0.1);
+    --range-track:  rgba(255, 255, 255, 0.1);
+    --tooltip-bg:   #1a1a1a;
+    --tooltip-border:rgba(255,255,255,0.08);
+  }
+
+  html {
+    background-color: var(--surface);
+    transition: background-color 0.25s ease;
+  }
+
+  body {
+    color: var(--text-base);
+    @apply antialiased;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: color 0.25s ease;
+  }
+
+  /* ── Light-mode colour inversions ─────────────────────────────── */
+  /* These utility classes use white-on-dark by default;
+     in light mode we flip them to dark-on-light. */
+
+  /* text-white → near-black */
+  html:not(.dark) .text-white { color: #111111; }
+
+  /* bg-surface* → use CSS vars (handled by tailwind config) */
+
+  /* semi-transparent white bg → semi-transparent black bg */
+  html:not(.dark) .bg-white\/\[0\.03\]  { background-color: rgba(0,0,0,0.03);  }
+  html:not(.dark) .bg-white\/\[0\.04\]  { background-color: rgba(0,0,0,0.04);  }
+  html:not(.dark) .bg-white\/\[0\.05\]  { background-color: rgba(0,0,0,0.05);  }
+  html:not(.dark) .bg-white\/\[0\.06\]  { background-color: rgba(0,0,0,0.06);  }
+  html:not(.dark) .bg-white\/\[0\.07\]  { background-color: rgba(0,0,0,0.07);  }
+  html:not(.dark) .bg-white\/\[0\.08\]  { background-color: rgba(0,0,0,0.08);  }
+  html:not(.dark) .bg-white\/\[0\.1\]   { background-color: rgba(0,0,0,0.08);  }
+  html:not(.dark) .bg-white\/10         { background-color: rgba(0,0,0,0.08);  }
+  html:not(.dark) .bg-white\/5          { background-color: rgba(0,0,0,0.05);  }
+
+  /* hover bg */
+  html:not(.dark) .hover\:bg-white\/\[0\.05\]:hover { background-color: rgba(0,0,0,0.05); }
+  html:not(.dark) .hover\:bg-white\/\[0\.06\]:hover { background-color: rgba(0,0,0,0.06); }
+  html:not(.dark) .hover\:bg-white\/\[0\.07\]:hover { background-color: rgba(0,0,0,0.07); }
+  html:not(.dark) .hover\:bg-white\/\[0\.08\]:hover { background-color: rgba(0,0,0,0.08); }
+  html:not(.dark) .hover\:bg-white\/\[0\.09\]:hover { background-color: rgba(0,0,0,0.09); }
+
+  /* white borders → black borders */
+  html:not(.dark) .border-white\/\[0\.04\] { border-color: rgba(0,0,0,0.05);  }
+  html:not(.dark) .border-white\/\[0\.06\] { border-color: rgba(0,0,0,0.07);  }
+  html:not(.dark) .border-white\/\[0\.07\] { border-color: rgba(0,0,0,0.08);  }
+  html:not(.dark) .border-white\/\[0\.08\] { border-color: rgba(0,0,0,0.09);  }
+  html:not(.dark) .border-white\/\[0\.1\]  { border-color: rgba(0,0,0,0.10);  }
+  html:not(.dark) .border-white\/10        { border-color: rgba(0,0,0,0.10);  }
+
+  /* neutral text — lighter shades become darker in light mode for contrast */
+  html:not(.dark) .text-neutral-300 { color: #333333; }
+  html:not(.dark) .text-neutral-400 { color: #444444; }
+  html:not(.dark) .text-neutral-500 { color: #555555; }
+  html:not(.dark) .text-neutral-600 { color: #777777; }
+  html:not(.dark) .text-neutral-700 { color: #999999; }
+
+  /* hover text neutrals */
+  html:not(.dark) .hover\:text-neutral-300:hover { color: #222222; }
+  html:not(.dark) .hover\:text-neutral-400:hover  { color: #333333; }
+  html:not(.dark) .hover\:text-white:hover        { color: #111111; }
+
+  /* ── Custom scrollbar ─────────────────────────────────────────── */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb {
+    background: var(--scrollbar);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover { opacity: 0.8; }
+
+  /* ── Range inputs ─────────────────────────────────────────────── */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 3px;
+    border-radius: 9999px;
+    background: var(--range-track);
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #E63C3A;
+    cursor: pointer;
+    box-shadow: 0 0 0 3px rgba(230, 60, 58, 0.2);
+    transition: box-shadow 0.15s ease;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 5px rgba(230, 60, 58, 0.25);
+  }
+  input[type="range"].accent-sky-500::-webkit-slider-thumb,
+  input[type="range"].accent-sky-400::-webkit-slider-thumb {
+    background: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+  }
+  input[type="range"].accent-emerald-500::-webkit-slider-thumb,
+  input[type="range"].accent-emerald-400::-webkit-slider-thumb {
+    background: #4ade80;
+    box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.2);
+  }
+  input[type="range"].accent-violet-500::-webkit-slider-thumb {
+    background: #a78bfa;
+    box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.2);
+  }
+  input[type="range"].accent-red-500::-webkit-slider-thumb,
+  input[type="range"].accent-red-400::-webkit-slider-thumb {
+    background: #f87171;
+    box-shadow: 0 0 0 3px rgba(248, 113, 113, 0.2);
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Card uses CSS variables — automatically flips in light mode */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    transition: background 0.25s ease, border-color 0.25s ease;
+  }
+  .card-hover {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card-hover:hover {
+    border-color: var(--card-border-h);
+    box-shadow: var(--card-shadow);
+  }
+}

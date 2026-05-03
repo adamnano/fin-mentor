@@ -1,0 +1,39 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  darkMode: "class",
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        brand: {
+          DEFAULT: "#E63C3A",
+          light: "#ff6b69",
+          dark: "#c4302e",
+          muted: "rgba(230,60,58,0.12)",
+          border: "rgba(230,60,58,0.25)",
+        },
+        surface: {
+          DEFAULT: "var(--surface)",
+          1: "var(--surface-1)",
+          2: "var(--surface-2)",
+          3: "var(--surface-3)",
+        },
+      },
+      fontFamily: {
+        sans: ["var(--font-dm-sans)", "DM Sans", "system-ui", "sans-serif"],
+        display: ["var(--font-dm-sans)", "DM Sans", "system-ui", "sans-serif"],
+      },
+      spacing: {
+        "88": "22rem",
+        "104": "26rem",
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;
