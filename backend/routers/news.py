@@ -8,7 +8,7 @@ from fastapi import APIRouter
 from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
-from services.ollama_client import stream_completion
+from services.openai_client import stream_completion
 
 router = APIRouter(prefix="/news")
 

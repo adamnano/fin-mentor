@@ -3,7 +3,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from typing import List, Optional
 
-from services.ollama_client import stream_completion
+from services.openai_client import stream_completion
 
 router = APIRouter()
 

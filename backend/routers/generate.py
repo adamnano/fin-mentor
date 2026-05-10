@@ -4,7 +4,7 @@ import re
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 
-from services.ollama_client import generate_completion
+from services.openai_client import generate_completion
 
 router = APIRouter()
 
