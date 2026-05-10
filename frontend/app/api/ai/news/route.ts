@@ -1,8 +1,10 @@
 import { NextRequest } from "next/server";
 
+const PYTHON_BACKEND_URL = process.env.PYTHON_BACKEND_URL || "http://localhost:8000";
+
 export async function POST(req: NextRequest) {
   const body = await req.json();
-  const pythonRes = await fetch("http://localhost:8000/news/analyze", {
+  const pythonRes = await fetch(`${PYTHON_BACKEND_URL}/news/analyze`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
