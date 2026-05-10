@@ -1,17 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import {
-  BarChart,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-  Cell,
-  LabelList,
-} from "recharts";
 import { BalanceSheetParams } from "@/lib/types";
 
 interface Props {
@@ -26,36 +15,20 @@ function fmt(v: number) {
 
 export default function BalanceSheetChart({ params }: Props) {
   const [cash, setCash] = useState(params.cash);
-  const [receivables, setReceivables] = useState(params.receivables);
-  const [inventory, setInventory] = useState(params.inventory);
+  const [receivables] = useState(params.receivables);
+  const [inventory] = useState(params.inventory);
   const [currentLiabilities, setCurrentLiabilities] = useState(params.currentLiabilities);
-  const [longTermDebt, setLongTermDebt] = useState(params.longTermDebt);
+  const [longTermDebt] = useState(params.longTermDebt);
   const [equity, setEquity] = useState(params.equity);
 
   const currentAssets = cash + receivables + inventory;
-  const totalAssets = currentAssets + equity * 0.3;
   const totalLiabilities = currentLiabilities + longTermDebt;
 
   const ratios = useMemo(() => ({
-    current: ((currentAssets) / (currentLiabilities || 1)).toFixed(2),
+    current: (currentAssets / (currentLiabilities || 1)).toFixed(2),
     quick: ((cash + receivables) / (currentLiabilities || 1)).toFixed(2),
     debtToEquity: ((currentLiabilities + longTermDebt) / (equity || 1)).toFixed(2),
-  }), [cash, receivables, inventory, currentLiabilities, longTermDebt, equity]);
-
-  const data = [
-    {
-      name: "Assets",
-      cash,
-      receivables,
-      inventory,
-    },
-    {
-      name: "Liabilities & Equity",
-      currentLiabilities,
-      longTermDebt,
-      equity,
-    },
-  ];
+  }), [cash, receivables, inventory, currentLiabilities, longTermDebt, equity, currentAssets]);
 
   return (
     <div className="space-y-4">

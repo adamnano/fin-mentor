@@ -9,9 +9,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Line,
-  LineChart,
-  ReferenceLine,
 } from "recharts";
 import { EfficientFrontierParams } from "@/lib/types";
 
@@ -36,23 +33,6 @@ export default function EfficientFrontierChart({ params }: Props) {
     [assets, riskFreeRate]
   );
 
-  // Generate frontier curve (simplified: blend between min and max risk asset)
-  const frontierData = useMemo(() => {
-    const sorted = [...assets].sort((a, b) => a.stddev - b.stddev);
-    if (sorted.length < 2) return [];
-    const minAsset = sorted[0];
-    const maxAsset = sorted[sorted.length - 1];
-    return Array.from({ length: 20 }, (_, i) => {
-      const w = i / 19;
-      const r = minAsset.return + w * (maxAsset.return - minAsset.return);
-      const s = Math.sqrt(
-        Math.pow(1 - w, 2) * Math.pow(minAsset.stddev, 2) +
-          Math.pow(w, 2) * Math.pow(maxAsset.stddev, 2) +
-          2 * w * (1 - w) * 0.2 * minAsset.stddev * maxAsset.stddev
-      );
-      return { stddev: Math.round(s * 1000) / 10, return: Math.round(r * 1000) / 10 };
-    });
-  }, [assets]);
 
   return (
     <div className="space-y-4">

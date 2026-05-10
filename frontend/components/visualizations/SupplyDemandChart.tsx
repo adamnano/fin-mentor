@@ -21,8 +21,8 @@ interface Props {
 export default function SupplyDemandChart({ params }: Props) {
   const [demandIntercept, setDemandIntercept] = useState(params.demandIntercept);
   const [supplyIntercept, setSupplyIntercept] = useState(params.supplyIntercept);
-  const [demandSlope, setDemandSlope] = useState(params.demandSlope);
-  const [supplySlope, setSupplySlope] = useState(params.supplySlope);
+  const [demandSlope] = useState(params.demandSlope);
+  const [supplySlope] = useState(params.supplySlope);
 
   const xLabel = params.xLabel ?? "Quantity";
   const yLabel = params.yLabel ?? "Price";
