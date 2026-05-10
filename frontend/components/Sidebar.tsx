@@ -184,7 +184,7 @@ export default function Sidebar({
           <div>
             <p className="text-xs text-neutral-400 font-medium">AI Generation</p>
             <p className="text-xs text-neutral-600 mt-0.5">
-              {useAI ? "Ollama · local LLM" : "Question bank"}
+              {useAI ? "OpenAI · GPT-4.1 mini" : "Question bank"}
             </p>
           </div>
           <button
