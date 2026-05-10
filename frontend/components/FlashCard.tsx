@@ -43,7 +43,7 @@ export default function FlashCard({ question, isGenerating, onNext }: Props) {
 
   if (isGenerating || !question) {
     return (
-      <div className="card p-7 min-h-[280px]">
+      <div className="card p-4 md:p-7 min-h-[280px]">
         <SkeletonLoader />
       </div>
     );
@@ -59,7 +59,7 @@ export default function FlashCard({ question, isGenerating, onNext }: Props) {
         animate={{ opacity: 1, rotateY: 0 }}
         exit={{ opacity: 0, rotateY: isFlipped ? 90 : -90 }}
         transition={{ duration: 0.22, ease: [0.4, 0, 0.2, 1] }}
-        className="card card-hover p-7 min-h-[280px] flex flex-col cursor-pointer select-none"
+        className="card card-hover p-4 md:p-7 min-h-[280px] flex flex-col cursor-pointer select-none"
         onClick={!isFlipped ? handleFlip : undefined}
         style={{ perspective: "1000px" }}
       >

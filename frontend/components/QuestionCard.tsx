@@ -61,7 +61,7 @@ export default function QuestionCard({
 
   if (isGenerating || !question) {
     return (
-      <div className="card p-7 min-h-[280px]">
+      <div className="card p-4 md:p-7 min-h-[280px]">
         <SkeletonLoader />
       </div>
     );
@@ -77,7 +77,7 @@ export default function QuestionCard({
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -16 }}
         transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-        className="card card-hover p-7"
+        className="card card-hover p-4 md:p-7"
       >
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
