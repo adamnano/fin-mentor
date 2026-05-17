@@ -7,6 +7,17 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import { ChatMessage, Question } from "@/lib/types";
 
+// Normalise LLM math output before ReactMarkdown sees it:
+// 1. \[...\] → $$...$$ (markdown strips the \ before remark-math can parse it)
+// 2. \(...\) → $...$
+// 3. Escape bare currency dollar signs ($58) so they aren't treated as math
+function normaliseMath(raw: string): string {
+  return raw
+    .replace(/\$(?=\d)/g, "\\$")                                         // $58 → \$58
+    .replace(/\\\[([\s\S]*?)\\\]/g, (_, m) => `\n$$\n${m}\n$$\n`)        // \[...\] → $$...$$
+    .replace(/\\\(([\s\S]*?)\\\)/g, (_, m) => `$${m}$`);                 // \(...\) → $...$
+}
+
 function MathMessage({ content }: { content: string }) {
   return (
     <ReactMarkdown
@@ -24,7 +35,7 @@ function MathMessage({ content }: { content: string }) {
         ),
       }}
     >
-      {content}
+      {normaliseMath(content)}
     </ReactMarkdown>
   );
 }
