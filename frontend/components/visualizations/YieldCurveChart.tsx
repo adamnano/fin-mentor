@@ -92,8 +92,8 @@ export default function YieldCurveChart({ params }: Props) {
               name === "price" ? "Bond Price" : "Par Value",
             ]}
           />
-          <ReferenceLine x={ytm * 100} stroke="#D97706" strokeDasharray="4 4"
-            label={{ value: "Current YTM", fill: "#D97706", fontSize: 10 }} />
+          <ReferenceLine x={ytm * 100} stroke="#E63C3A" strokeDasharray="4 4"
+            label={{ value: "Current YTM", fill: "#E63C3A", fontSize: 10 }} />
           <Line type="monotone" dataKey="par" stroke="#475569" strokeWidth={1.5} dot={false} strokeDasharray="4 4" />
           <Line type="monotone" dataKey="price" stroke="#38bdf8" strokeWidth={2.5} dot={false} />
         </LineChart>

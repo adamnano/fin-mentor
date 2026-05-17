@@ -11,11 +11,11 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#D97706",
-          light: "#F59E0B",
-          dark: "#B45309",
-          muted: "rgba(217, 119, 6, 0.12)",
-          border: "rgba(217, 119, 6, 0.28)",
+          DEFAULT: "#E63C3A",
+          light: "#ff6b69",
+          dark: "#c4302e",
+          muted: "rgba(230, 60, 58, 0.12)",
+          border: "rgba(230, 60, 58, 0.28)",
         },
         surface: {
           DEFAULT: "var(--surface)",

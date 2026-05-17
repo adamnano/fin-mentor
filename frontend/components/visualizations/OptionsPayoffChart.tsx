@@ -100,8 +100,8 @@ export default function OptionsPayoffChart({ params }: Props) {
           <ReferenceLine y={0} stroke="#475569" strokeWidth={1.5} />
           <ReferenceLine x={strike} stroke="#94a3b8" strokeDasharray="3 3"
             label={{ value: "Strike", fill: "#94a3b8", fontSize: 10 }} />
-          <ReferenceLine x={breakeven} stroke="#D97706" strokeDasharray="3 3"
-            label={{ value: "B/E", fill: "#D97706", fontSize: 10 }} />
+          <ReferenceLine x={breakeven} stroke="#E63C3A" strokeDasharray="3 3"
+            label={{ value: "B/E", fill: "#E63C3A", fontSize: 10 }} />
           <Line type="monotone" dataKey="profit"
             stroke={optionType === "call" ? "#4ade80" : "#f87171"}
             strokeWidth={2.5} dot={false} />

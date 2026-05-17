@@ -117,13 +117,13 @@
     width: 14px;
     height: 14px;
     border-radius: 50%;
-    background: #D97706;
+    background: #E63C3A;
     cursor: pointer;
-    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.22);
+    box-shadow: 0 0 0 3px rgba(230, 60, 58, 0.22);
     transition: box-shadow 0.15s ease;
   }
   input[type="range"]::-webkit-slider-thumb:hover {
-    box-shadow: 0 0 0 5px rgba(217, 119, 6, 0.28);
+    box-shadow: 0 0 0 5px rgba(230, 60, 58, 0.28);
   }
   /* Keep accent overrides for charts that intentionally use other colors */
   input[type="range"].accent-sky-500::-webkit-slider-thumb,
