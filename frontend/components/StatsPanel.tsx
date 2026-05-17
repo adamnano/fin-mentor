@@ -291,16 +291,10 @@ export default function StatsPanel({ data }: Props) {
             <span className="text-neutral-600 mx-1">·</span>
             <span className="text-xs text-neutral-500">My Stats</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Link href="/roadmap"
-              className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/[0.06] border border-white/[0.08] text-neutral-400 hover:text-white hover:bg-white/[0.10] transition-colors">
-              ML Roadmap →
-            </Link>
-            <Link href="/"
-              className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors shadow-sm shadow-brand/20">
-              ← Back to Training
-            </Link>
-          </div>
+          <Link href="/"
+            className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors shadow-sm shadow-brand/20">
+            ← Back to Training
+          </Link>
         </div>
       </nav>
 
@@ -544,14 +538,9 @@ export default function StatsPanel({ data }: Props) {
         {/* Footer */}
         <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
           <p className="text-xs text-neutral-700">TABF FinMentor · Adaptive Finance Training</p>
-          <div className="flex items-center gap-2">
-            <Link href="/roadmap" className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/[0.06] border border-white/[0.08] text-neutral-500 hover:text-white hover:bg-white/[0.10] transition-colors">
-              ML Roadmap →
-            </Link>
-            <Link href="/" className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors">
-              ← Back to Training
-            </Link>
-          </div>
+          <Link href="/" className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors">
+            ← Back to Training
+          </Link>
         </div>
       </div>
     </div>
