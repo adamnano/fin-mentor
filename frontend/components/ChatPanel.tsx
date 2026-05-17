@@ -2,7 +2,32 @@
 
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import { ChatMessage, Question } from "@/lib/types";
+
+function MathMessage({ content }: { content: string }) {
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkMath]}
+      rehypePlugins={[rehypeKatex]}
+      components={{
+        p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+        ul: ({ children }) => <ul className="list-disc pl-4 mb-2 space-y-0.5">{children}</ul>,
+        ol: ({ children }) => <ol className="list-decimal pl-4 mb-2 space-y-0.5">{children}</ol>,
+        li: ({ children }) => <li className="text-[13px]">{children}</li>,
+        strong: ({ children }) => <strong className="font-semibold text-white">{children}</strong>,
+        em: ({ children }) => <em className="italic text-neutral-300">{children}</em>,
+        code: ({ children }) => (
+          <code className="font-mono text-[12px] bg-white/[0.08] px-1.5 py-0.5 rounded text-brand">{children}</code>
+        ),
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  );
+}
 
 interface Props {
   question: Question | null;
@@ -165,12 +190,18 @@ export default function ChatPanel({
                   : "bg-white/[0.06] border border-white/[0.08] text-neutral-300 rounded-bl-sm"
               }`}
             >
-              {msg.content || (
-                <span className="flex gap-1 items-center py-1">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand/60 animate-bounce" style={{ animationDelay: "0ms" }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand/60 animate-bounce" style={{ animationDelay: "150ms" }} />
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand/60 animate-bounce" style={{ animationDelay: "300ms" }} />
-                </span>
+              {msg.role === "assistant" ? (
+                msg.content ? (
+                  <MathMessage content={msg.content} />
+                ) : (
+                  <span className="flex gap-1 items-center py-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand/60 animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand/60 animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand/60 animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </span>
+                )
+              ) : (
+                msg.content
               )}
             </div>
           </div>

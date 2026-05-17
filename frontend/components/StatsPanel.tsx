@@ -12,7 +12,7 @@ import { ALL_CATEGORIES, CFACategory } from "@/lib/types";
 // ── Types ──────────────────────────────────────────────────────────────────────
 interface DaySession { date: string; count: number; correct: number }
 interface TimeEntry { category: string; avgSeconds: number; count: number }
-interface RecentSession { isCorrect: boolean; category: string; createdAt: string }
+interface RecentSession { isCorrect: boolean; category: string; createdAt: string | null }
 interface Score {
   category: string; level: number;
   totalAttempts?: number; total_attempts?: number;
