@@ -15,7 +15,7 @@ const ZONE_COLOR = (prob: number, impact: number) => {
   return { bg: "rgba(74,222,128,0.10)", border: "rgba(74,222,128,0.28)", label: "Low" };
 };
 
-const RISK_COLORS = ["#8B9130", "#38bdf8", "#4ade80", "#a78bfa", "#fb923c"];
+const RISK_COLORS = ["#D97706", "#38bdf8", "#4ade80", "#a78bfa", "#fb923c"];
 
 export default function RiskMatrixChart({ params }: Props) {
   // Offset: all risks start at low probability/impact

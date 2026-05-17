@@ -151,8 +151,8 @@ export default function Sidebar({
                 <Radar
                   name="Accuracy"
                   dataKey="value"
-                  stroke="#8B9130"
-                  fill="#8B9130"
+                  stroke="#D97706"
+                  fill="#D97706"
                   fillOpacity={0.18}
                   strokeWidth={1.5}
                 />

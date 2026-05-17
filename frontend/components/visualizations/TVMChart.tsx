@@ -87,7 +87,7 @@ export default function TVMChart({ params }: Props) {
             ]}
           />
           <Line type="monotone" dataKey="simple" stroke="rgba(255,255,255,0.12)" strokeWidth={1.5} dot={false} strokeDasharray="4 4" />
-          <Line type="monotone" dataKey="value" stroke="#8B9130" strokeWidth={2.5} dot={false} />
+          <Line type="monotone" dataKey="value" stroke="#D97706" strokeWidth={2.5} dot={false} />
         </LineChart>
       </ResponsiveContainer>
 

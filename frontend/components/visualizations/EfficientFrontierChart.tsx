@@ -16,7 +16,7 @@ interface Props {
   params: EfficientFrontierParams;
 }
 
-const COLORS = ["#8B9130", "#38bdf8", "#4ade80", "#a78bfa", "#fb923c"];
+const COLORS = ["#D97706", "#38bdf8", "#4ade80", "#a78bfa", "#fb923c"];
 
 export default function EfficientFrontierChart({ params }: Props) {
   const { assets, riskFreeRate } = params;

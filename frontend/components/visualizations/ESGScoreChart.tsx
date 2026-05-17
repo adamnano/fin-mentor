@@ -54,7 +54,7 @@ export default function ESGScoreChart({ params }: Props) {
         <RadarChart data={data} margin={{ top: 5, right: 20, left: 20, bottom: 5 }}>
           <PolarGrid stroke="rgba(255,255,255,0.08)" />
           <PolarAngleAxis dataKey="subject" tick={{ fontSize: 9, fill: "#71717a" }} />
-          <Radar name="Company" dataKey="company" stroke="#8B9130" fill="#8B9130" fillOpacity={0.22} strokeWidth={2} />
+          <Radar name="Company" dataKey="company" stroke="#D97706" fill="#D97706" fillOpacity={0.22} strokeWidth={2} />
           <Radar name="Industry Avg" dataKey="industry" stroke="#38bdf8" fill="#38bdf8" fillOpacity={0.1} strokeWidth={1.5} strokeDasharray="4 4" />
           <Tooltip
             contentStyle={{ background: "var(--tooltip-bg)", border: "1px solid var(--tooltip-border)", borderRadius: 10, fontSize: 11 }}
