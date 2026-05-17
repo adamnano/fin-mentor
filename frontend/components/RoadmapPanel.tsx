@@ -387,12 +387,11 @@ export default function RoadmapPanel() {
             Proposed Feature Roadmap
           </div>
           <h1 className="text-4xl font-black text-white mb-4 leading-tight">
-            Smarter Studying<br />
-            <span className="text-neutral-500">through Machine Learning</span>
+            Ideas for Taking<br />
+            <span className="text-neutral-500">FinMentor Further</span>
           </h1>
           <p className="text-base text-neutral-400 leading-relaxed max-w-2xl">
-            Three AI-powered enhancements that would transform TABF FinMentor from a question bank
-            into a truly adaptive tutor — one that learns how you learn.
+            Three features that could make the app meaningfully smarter — each grounded in how people actually learn and retain information.
           </p>
         </div>
 
