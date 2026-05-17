@@ -139,7 +139,7 @@ export default function AppShell({ initialScores }: Props) {
           <div className="flex items-center gap-2">
             {/* Mode toggle */}
             <div className="flex items-center gap-0.5 bg-white/[0.05] rounded-xl p-1 border border-white/[0.07]">
-              {([["mcq", "Quiz"], ["flashcard", "Cards"], ["news", "News"]] as const).map(([m, label]) => (
+              {([["mcq", "Quiz"], ["news", "News"]] as const).map(([m, label]) => (
                 <button
                   key={m}
                   onClick={() => dispatch({ type: "SET_MODE", mode: m as "mcq" | "flashcard" | "news" })}
