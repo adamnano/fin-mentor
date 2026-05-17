@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -190,8 +191,9 @@ export default function StatsPanel({ data }: Props) {
     );
   }
 
-  const isDemo = data.totalSessions === 0;
-  const resolved = isDemo ? generateDemoData() : data;
+  const [showDemo, setShowDemo] = useState(data.totalSessions === 0);
+  const isDemo = showDemo;
+  const resolved = showDemo ? generateDemoData() : data;
   const { scores, dailySessions, timeByCategory, recentSessions, totalSessions, totalCorrect, avgTimeSeconds } = resolved;
 
   const overallAccuracy = accuracy(totalSessions, totalCorrect);
@@ -291,10 +293,22 @@ export default function StatsPanel({ data }: Props) {
             <span className="text-neutral-600 mx-1">·</span>
             <span className="text-xs text-neutral-500">My Stats</span>
           </div>
-          <Link href="/"
-            className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors shadow-sm shadow-brand/20">
-            ← Back to Training
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setShowDemo(!showDemo)}
+              className={`px-4 py-2 text-xs font-semibold rounded-xl border transition-colors ${
+                showDemo
+                  ? "bg-amber-500/15 border-amber-500/35 text-amber-400"
+                  : "bg-white/[0.05] border-white/[0.08] text-neutral-500 hover:text-neutral-300"
+              }`}
+            >
+              {showDemo ? "● Demo" : "Demo"}
+            </button>
+            <Link href="/"
+              className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors shadow-sm shadow-brand/20">
+              ← Back to Training
+            </Link>
+          </div>
         </div>
       </nav>
 
