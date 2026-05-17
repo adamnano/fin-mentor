@@ -210,10 +210,16 @@ export default function StatsPanel({ data }: Props) {
             <span className="text-neutral-600 mx-1">·</span>
             <span className="text-xs text-neutral-500">My Stats</span>
           </div>
-          <Link href="/"
-            className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors shadow-sm shadow-brand/20">
-            ← Back to Training
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/roadmap"
+              className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/[0.06] border border-white/[0.08] text-neutral-400 hover:text-white hover:bg-white/[0.10] transition-colors">
+              ML Roadmap →
+            </Link>
+            <Link href="/"
+              className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors shadow-sm shadow-brand/20">
+              ← Back to Training
+            </Link>
+          </div>
         </div>
       </nav>
 
@@ -225,20 +231,17 @@ export default function StatsPanel({ data }: Props) {
           <p className="text-sm text-neutral-500">Your complete practice history and improvement insights</p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="flex items-center divide-x divide-white/[0.07] border border-white/[0.07] rounded-2xl bg-surface-1 overflow-hidden">
           {[
-            { label: "Questions Answered", value: totalSessions.toLocaleString(), sub: "all time", icon: "🎯" },
-            { label: "Overall Accuracy", value: overallAccuracy !== null ? `${overallAccuracy}%` : "—", sub: `${totalCorrect} correct`, icon: "✓" },
-            { label: "Day Streak", value: streak > 0 ? `${streak}d` : "—", sub: `${activeDays} active days`, icon: "🔥" },
-            { label: "Avg Time / Q", value: avgTimeSeconds > 0 ? `${avgTimeSeconds}s` : "—", sub: "across all topics", icon: "⏱" },
+            { label: "Questions Answered", value: totalSessions.toLocaleString(), sub: "all time" },
+            { label: "Overall Accuracy", value: overallAccuracy !== null ? `${overallAccuracy}%` : "—", sub: `${totalCorrect} correct` },
+            { label: "Day Streak", value: streak > 0 ? `${streak}d` : "—", sub: `${activeDays} active days` },
+            { label: "Avg Time / Q", value: avgTimeSeconds > 0 ? `${avgTimeSeconds}s` : "—", sub: "across all topics" },
           ].map((stat) => (
-            <div key={stat.label} className="card p-5">
-              <div className="flex items-start justify-between mb-3">
-                <p className="text-[10px] text-neutral-500 uppercase tracking-widest font-semibold">{stat.label}</p>
-                <span className="text-lg">{stat.icon}</span>
-              </div>
+            <div key={stat.label} className="flex-1 px-6 py-5">
+              <p className="text-[10px] text-neutral-600 uppercase tracking-widest font-semibold mb-1">{stat.label}</p>
               <p className="text-3xl font-bold text-white tabular-nums">{stat.value}</p>
-              <p className="text-xs text-neutral-600 mt-1">{stat.sub}</p>
+              <p className="text-xs text-neutral-600 mt-0.5">{stat.sub}</p>
             </div>
           ))}
         </div>
@@ -427,22 +430,24 @@ export default function StatsPanel({ data }: Props) {
         )}
 
         {/* ── Improvement Suggestions ─────────────────────────────────── */}
-        <div className="card p-6">
+        <div>
           <h2 className="text-sm font-semibold text-white mb-1">Improvement Plan</h2>
-          <p className="text-xs text-neutral-600 mb-5">Personalised suggestions based on your data</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <p className="text-xs text-neutral-600 mb-4">Personalised suggestions based on your data</p>
+          <div className="space-y-2">
             {suggestions.slice(0, 6).map((s, i) => (
-              <div key={i} className={`rounded-2xl border p-4 ${urgencyStyle[s.urgency]}`}>
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xl">{s.icon}</span>
-                  <div>
-                    <p className="text-xs font-semibold text-white leading-tight">{s.title}</p>
+              <div key={i} className={`flex items-start gap-4 px-5 py-4 rounded-xl border-l-2 bg-surface-1 ${
+                s.urgency === "high" ? "border-l-brand" : s.urgency === "medium" ? "border-l-amber-500" : "border-l-white/20"
+              }`}>
+                <span className="text-lg shrink-0 mt-0.5">{s.icon}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <p className="text-xs font-semibold text-white">{s.title}</p>
                     <span className={`text-[9px] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded-full border ${urgencyBadge[s.urgency]}`}>
                       {s.urgency === "high" ? "Priority" : s.urgency === "medium" ? "Suggested" : "Explore"}
                     </span>
                   </div>
+                  <p className="text-xs text-neutral-500 leading-relaxed">{s.body}</p>
                 </div>
-                <p className="text-xs text-neutral-400 leading-relaxed">{s.body}</p>
               </div>
             ))}
           </div>
@@ -451,9 +456,14 @@ export default function StatsPanel({ data }: Props) {
         {/* Footer */}
         <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
           <p className="text-xs text-neutral-700">TABF FinMentor · Adaptive Finance Training</p>
-          <Link href="/" className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors">
-            ← Back to Training
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link href="/roadmap" className="px-4 py-2 text-xs font-semibold rounded-xl bg-white/[0.06] border border-white/[0.08] text-neutral-500 hover:text-white hover:bg-white/[0.10] transition-colors">
+              ML Roadmap →
+            </Link>
+            <Link href="/" className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors">
+              ← Back to Training
+            </Link>
+          </div>
         </div>
       </div>
     </div>
