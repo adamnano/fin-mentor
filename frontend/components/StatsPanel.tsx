@@ -29,6 +29,85 @@ interface StatsData {
 
 interface Props { data: StatsData | null }
 
+// ── Demo data (shown when DB is empty) ─────────────────────────────────────────
+function generateDemoData(): StatsData {
+  // Deterministic seeded PRNG so output is stable across renders
+  let s = 42;
+  const rand = () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 0xffffffff; };
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  // ── Daily sessions: last 91 days, always active in the last 9 (streak) ──
+  const dailySessions: DaySession[] = [];
+  for (let i = 90; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const dow = d.getDay();
+    const isWeekend = dow === 0 || dow === 6;
+    const forceActive = i < 9;
+    if (!forceActive) {
+      if (isWeekend && rand() < 0.38) continue;
+      if (!isWeekend && rand() < 0.14) continue;
+      if (i > 55 && rand() < 0.22) continue;
+    }
+    const count = forceActive
+      ? Math.max(8, Math.floor(8 + rand() * 18))
+      : Math.max(2, Math.floor(4 + rand() * 16));
+    const correct = Math.round(count * (0.54 + rand() * 0.34));
+    dailySessions.push({ date: d.toISOString().split("T")[0], count, correct });
+  }
+
+  // ── Per-category scores: [totalAttempts, correctCount] ──
+  const raw: Record<string, [number, number]> = {
+    "TVM":                    [148, 97],
+    "Fixed Income":           [116, 67],
+    "Derivatives":            [92, 38],
+    "Economics":              [104, 77],
+    "FSA":                    [80, 47],
+    "Portfolio Management":   [98, 40],
+    "Ethics":                 [124, 102],
+    "Equity":                 [86, 55],
+    "ESG & Sustainability":   [32, 20],
+    "Risk Management":        [68, 26],
+    "Compliance & AML":       [60, 42],
+  };
+
+  const scores: Score[] = Object.entries(raw).flatMap(([cat, [tot, cor]]) => [
+    { category: cat, level: 1, totalAttempts: Math.round(tot * 0.60), correctCount: Math.round(cor * 0.60) },
+    { category: cat, level: 2, totalAttempts: Math.round(tot * 0.30), correctCount: Math.round(cor * 0.30) },
+    { category: cat, level: 3, totalAttempts: Math.round(tot * 0.10), correctCount: Math.round(cor * 0.10) },
+  ]);
+
+  const timeByCategory: TimeEntry[] = [
+    { category: "TVM",                  avgSeconds: 71,  count: 148 },
+    { category: "Fixed Income",         avgSeconds: 96,  count: 116 },
+    { category: "Derivatives",          avgSeconds: 112, count: 92  },
+    { category: "Economics",            avgSeconds: 58,  count: 104 },
+    { category: "FSA",                  avgSeconds: 84,  count: 80  },
+    { category: "Portfolio Management", avgSeconds: 101, count: 98  },
+    { category: "Ethics",               avgSeconds: 49,  count: 124 },
+    { category: "Equity",               avgSeconds: 77,  count: 86  },
+    { category: "Risk Management",      avgSeconds: 118, count: 68  },
+    { category: "Compliance & AML",     avgSeconds: 65,  count: 60  },
+  ];
+
+  const cats = Object.keys(raw);
+  const recentSessions: RecentSession[] = Array.from({ length: 100 }, (_, idx) => {
+    const cat = cats[Math.floor(rand() * cats.length)];
+    const [tot, cor] = raw[cat];
+    const isCorrect = rand() < cor / tot;
+    const d = new Date(today);
+    d.setDate(d.getDate() - Math.floor(rand() * 28));
+    return { isCorrect, category: cat, createdAt: d.toISOString() };
+  });
+
+  const totalSessions = dailySessions.reduce((n, d) => n + d.count, 0);
+  const totalCorrect  = dailySessions.reduce((n, d) => n + d.correct, 0);
+
+  return { scores, dailySessions, timeByCategory, recentSessions, totalSessions, totalCorrect, avgTimeSeconds: 79 };
+}
+
 const CATEGORY_ICONS: Record<string, string> = {
   TVM: "⏱", "Fixed Income": "📊", Derivatives: "📈", Economics: "🌐",
   FSA: "📋", "Portfolio Management": "💼", Ethics: "⚖️", Equity: "📉",
@@ -111,7 +190,9 @@ export default function StatsPanel({ data }: Props) {
     );
   }
 
-  const { scores, dailySessions, timeByCategory, recentSessions, totalSessions, totalCorrect, avgTimeSeconds } = data;
+  const isDemo = data.totalSessions === 0;
+  const resolved = isDemo ? generateDemoData() : data;
+  const { scores, dailySessions, timeByCategory, recentSessions, totalSessions, totalCorrect, avgTimeSeconds } = resolved;
 
   const overallAccuracy = accuracy(totalSessions, totalCorrect);
   const streak = calcStreak(dailySessions);
@@ -226,9 +307,16 @@ export default function StatsPanel({ data }: Props) {
       <div className="max-w-6xl mx-auto px-6 py-10 space-y-8">
 
         {/* ── Hero stats ──────────────────────────────────────────────── */}
-        <div>
-          <h1 className="text-2xl font-bold text-white mb-1">Performance Overview</h1>
-          <p className="text-sm text-neutral-500">Your complete practice history and improvement insights</p>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-white mb-1">Performance Overview</h1>
+            <p className="text-sm text-neutral-500">Your complete practice history and improvement insights</p>
+          </div>
+          {isDemo && (
+            <span className="shrink-0 mt-1 text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-full bg-amber-500/12 border border-amber-500/25 text-amber-400">
+              Demo data
+            </span>
+          )}
         </div>
 
         <div className="flex items-center divide-x divide-white/[0.07] border border-white/[0.07] rounded-2xl bg-surface-1 overflow-hidden">
