@@ -387,11 +387,10 @@ export default function RoadmapPanel() {
             Proposed Feature Roadmap
           </div>
           <h1 className="text-4xl font-black text-white mb-4 leading-tight">
-            Ideas for Taking<br />
-            <span className="text-neutral-500">FinMentor Further</span>
+            Possible Next Features
           </h1>
           <p className="text-base text-neutral-400 leading-relaxed max-w-2xl">
-            Three features that could make the app meaningfully smarter — each grounded in how people actually learn and retain information.
+            Three ideas for improving the app using ML — none are built yet, but each would make studying more effective.
           </p>
         </div>
 
