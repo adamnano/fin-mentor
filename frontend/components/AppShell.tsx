@@ -167,6 +167,14 @@ export default function AppShell({ initialScores }: Props) {
               {state.isDemoMode ? "● Demo" : "Demo"}
             </button>
 
+            {/* Stats link */}
+            <Link
+              href="/stats"
+              className="px-3 py-1.5 text-xs rounded-xl font-medium bg-white/[0.04] border border-white/[0.08] text-neutral-600 hover:text-neutral-300 hover:bg-white/[0.07] transition-all duration-150"
+            >
+              Stats
+            </Link>
+
             {/* About link */}
             <Link
               href="/about"
