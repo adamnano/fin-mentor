@@ -50,6 +50,7 @@ export default function FlashCard({ question, isGenerating, onNext }: Props) {
   }
 
   const choiceMap = { A: question.choiceA, B: question.choiceB, C: question.choiceC };
+  const total = score.known + score.review;
 
   return (
     <AnimatePresence mode="wait">
@@ -64,55 +65,58 @@ export default function FlashCard({ question, isGenerating, onNext }: Props) {
         style={{ perspective: "1000px" }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2">
             <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-brand-muted border border-brand-border text-brand text-xs font-semibold tracking-wide">
               {question.category}
             </span>
             <span className="inline-flex items-center px-2.5 py-1 rounded-full bg-white/[0.05] border border-white/[0.08] text-neutral-500 text-xs">
-              {isFlipped ? "Answer" : "Flashcard"}
+              {isFlipped ? "Answer" : "Question"}
             </span>
           </div>
-          <div className="flex gap-3 text-xs">
-            <span className="text-emerald-500">{score.known} ✓</span>
-            <span className="text-neutral-600">·</span>
-            <span className="text-brand">{score.review} ↺</span>
+          <div className="flex items-center gap-3 text-xs">
+            {total > 0 && (
+              <span className="text-neutral-600">{score.known}/{total}</span>
+            )}
+            <span className="text-emerald-500 font-medium">{score.known} ✓</span>
+            <span className="text-neutral-700">·</span>
+            <span className="text-amber-500 font-medium">{score.review} ↺</span>
           </div>
         </div>
 
         {!isFlipped ? (
           /* Front */
-          <div className="flex-1 flex flex-col items-center justify-center gap-5 text-center">
+          <div className="flex-1 flex flex-col items-center justify-center gap-6 text-center">
             <p className="text-white text-[15px] leading-relaxed font-normal">{question.questionText}</p>
-            <div className="flex items-center gap-2 text-xs text-neutral-600 mt-2">
-              <span className="w-6 h-px bg-neutral-800" />
-              <span>tap to reveal answer</span>
-              <span className="w-6 h-px bg-neutral-800" />
+            <div className="flex items-center gap-2 text-xs text-neutral-600">
+              <span className="w-8 h-px bg-neutral-800" />
+              <span className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.07]">tap to reveal</span>
+              <span className="w-8 h-px bg-neutral-800" />
             </div>
           </div>
         ) : (
           /* Back */
-          <div className="flex-1 flex flex-col gap-4">
-            <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-              <p className="text-xs font-semibold text-emerald-400 uppercase tracking-widest mb-1.5">
+          <div className="flex-1 flex flex-col gap-3">
+            <div className="p-4 rounded-2xl bg-emerald-500/10 border border-emerald-500/20">
+              <p className="text-[10px] font-semibold text-emerald-400 uppercase tracking-widest mb-1.5">
                 Correct Answer — {question.correctAnswer}
               </p>
               <p className="text-sm text-white font-medium">{choiceMap[question.correctAnswer]}</p>
             </div>
-            <div className="p-4 rounded-xl bg-white/[0.03] border border-white/[0.06]">
-              <p className="text-xs font-semibold text-brand uppercase tracking-widest mb-2">Explanation</p>
+            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex-1">
+              <p className="text-[10px] font-semibold text-brand uppercase tracking-widest mb-2">Explanation</p>
               <p className="text-sm text-neutral-400 leading-relaxed">{question.explanation}</p>
             </div>
             <div className="flex gap-3 mt-auto">
               <button
                 onClick={handleReview}
-                className="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-brand-muted border border-brand-border text-brand hover:bg-brand hover:text-white transition-all duration-200"
+                className="flex-1 py-3 rounded-2xl text-sm font-semibold bg-amber-500/10 border border-amber-500/25 text-amber-400 hover:bg-amber-500 hover:text-white hover:border-amber-500 transition-all duration-200"
               >
                 ↺ Review Again
               </button>
               <button
                 onClick={handleKnow}
-                className="flex-1 py-2.5 rounded-xl text-sm font-semibold bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all duration-200"
+                className="flex-1 py-3 rounded-2xl text-sm font-semibold bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all duration-200"
               >
                 ✓ Got It
               </button>

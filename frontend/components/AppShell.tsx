@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useAppState } from "@/lib/hooks/useAppState";
 import { CategoryScore, CFACategory, CFALevel } from "@/lib/types";
 import Sidebar from "./Sidebar";
@@ -104,44 +105,45 @@ export default function AppShell({ initialScores }: Props) {
       {/* Main Content */}
       <main className="flex-1 flex flex-col overflow-hidden min-w-0">
         {/* Top bar */}
-        <header className="shrink-0 flex items-center justify-between px-6 py-4 border-b border-white/[0.06] bg-surface-1">
-          <div className="flex items-center gap-4">
+        <header className="shrink-0 flex items-center justify-between px-5 py-3.5 border-b border-white/[0.06] bg-surface-1">
+          <div className="flex items-center gap-3">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="flex flex-col items-center justify-center gap-1.5 w-8 h-8 rounded-lg hover:bg-white/[0.06] transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-xl hover:bg-white/[0.06] transition-colors"
               aria-label="Toggle sidebar"
             >
-              <span className="w-4 h-px bg-neutral-400 rounded-full" />
-              <span className="w-4 h-px bg-neutral-400 rounded-full" />
-              <span className="w-4 h-px bg-neutral-400 rounded-full" />
+              <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" viewBox="0 0 24 24" className="text-neutral-500">
+                <path d="M3 6h18M3 12h18M3 18h18"/>
+              </svg>
             </button>
-            <div>
+            <div className="hidden md:block h-5 w-px bg-white/[0.08]" />
+            <div className="hidden md:flex items-center gap-2">
+              <div className="w-6 h-6 rounded-lg overflow-hidden border border-white/[0.08]">
+                <Image src="/tabf-logo.png" alt="TABF" width={24} height={24} className="w-full h-full object-cover" />
+              </div>
               <p className="text-sm font-semibold text-white tracking-tight">
                 {q ? (
                   <>
                     <span className="text-brand">{q.category}</span>
                     <span className="text-neutral-600 mx-2">·</span>
-                    <span className="text-neutral-400">Level {q.level}</span>
+                    <span className="text-neutral-500">Level {q.level}</span>
                   </>
                 ) : (
-                  <span className="text-neutral-500">Loading...</span>
+                  <span className="text-neutral-500">TABF FinMentor</span>
                 )}
-              </p>
-              <p className="text-xs text-neutral-600 mt-0.5 tracking-wide">
-                AI-powered adaptive training for financial professionals
               </p>
             </div>
           </div>
 
           {/* Header controls */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             {/* Mode toggle */}
-            <div className="flex items-center gap-1 bg-white/[0.05] rounded-lg p-1 border border-white/[0.07]">
-              {([["mcq", "MCQ"], ["flashcard", "Flashcard"], ["news", "📰 News"]] as const).map(([m, label]) => (
+            <div className="flex items-center gap-0.5 bg-white/[0.05] rounded-xl p-1 border border-white/[0.07]">
+              {([["mcq", "Quiz"], ["flashcard", "Cards"], ["news", "News"]] as const).map(([m, label]) => (
                 <button
                   key={m}
                   onClick={() => dispatch({ type: "SET_MODE", mode: m as "mcq" | "flashcard" | "news" })}
-                  className={`px-3 py-1 text-xs rounded-md font-medium transition-all duration-150 ${
+                  className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-all duration-150 ${
                     state.mode === m
                       ? "bg-brand text-white shadow-sm"
                       : "text-neutral-500 hover:text-neutral-300"
@@ -155,9 +157,9 @@ export default function AppShell({ initialScores }: Props) {
             {/* Demo mode toggle */}
             <button
               onClick={() => dispatch({ type: "TOGGLE_DEMO_MODE" })}
-              className={`px-3 py-1.5 text-xs rounded-lg font-medium transition-all duration-150 border ${
+              className={`px-3 py-1.5 text-xs rounded-xl font-medium transition-all duration-150 border ${
                 state.isDemoMode
-                  ? "bg-amber-500/20 border-amber-500/40 text-amber-400"
+                  ? "bg-amber-500/15 border-amber-500/35 text-amber-400"
                   : "bg-white/[0.04] border-white/[0.08] text-neutral-600 hover:text-neutral-400"
               }`}
               title="Exhibition demo mode — auto-cycles questions"
@@ -168,23 +170,23 @@ export default function AppShell({ initialScores }: Props) {
             {/* About link */}
             <Link
               href="/about"
-              className="px-3 py-1.5 text-xs rounded-lg font-medium bg-white/[0.04] border border-white/[0.08] text-neutral-600 hover:text-neutral-300 hover:bg-white/[0.07] transition-all duration-150"
+              className="px-3 py-1.5 text-xs rounded-xl font-medium bg-white/[0.04] border border-white/[0.08] text-neutral-600 hover:text-neutral-300 hover:bg-white/[0.07] transition-all duration-150"
             >
               About
             </Link>
 
             <button
               onClick={() => dispatch({ type: "TOGGLE_DARK_MODE" })}
-              className="w-8 h-8 flex items-center justify-center rounded-lg text-neutral-500 hover:text-neutral-300 hover:bg-white/[0.05] transition-all"
+              className="w-8 h-8 flex items-center justify-center rounded-xl text-neutral-500 hover:text-neutral-300 hover:bg-white/[0.05] transition-all"
               title={state.isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {state.isDarkMode ? (
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 3a9 9 0 1 0 0 18A9 9 0 0 0 12 3Zm0 2a7 7 0 0 1 0 14A7 7 0 0 1 12 5Zm0 1a6 6 0 1 0 0 12A6 6 0 0 0 12 6Zm0 1.5a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Z" />
-                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" fill="none"/>
+                <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
                 </svg>
               ) : (
-                <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
+                <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
               )}
@@ -227,7 +229,7 @@ export default function AppShell({ initialScores }: Props) {
 
           {/* Smart Study Path suggestion */}
           {state.studyPath && state.hasAnswered && state.mode === "mcq" && (
-            <div className="card p-4 border border-brand/20 bg-brand-muted">
+            <div className="card p-4 border border-brand/25 bg-brand-muted">
               <div className="flex items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
                   <span className="text-lg">💡</span>

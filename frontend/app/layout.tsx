@@ -9,7 +9,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "FinMentor AI · TABF Financial Training",
+  title: "TABF FinMentor · Adaptive Finance Training",
   description: "AI-powered adaptive training for financial professionals — by Taiwan Academy of Banking and Finance",
 };
 

@@ -257,7 +257,7 @@ export default function NewsPanel() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.07 }}
                 onClick={() => analyzeArticle(h)}
-                className="w-full text-left p-4 rounded-xl border border-white/[0.07] bg-white/[0.02] hover:border-brand/30 hover:bg-brand-muted group transition-all duration-200"
+                className="w-full text-left p-4 rounded-xl border border-white/[0.07] bg-white/[0.02] hover:border-brand/25 hover:bg-brand-muted group transition-all duration-200 rounded-2xl"
               >
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <p className="text-xs font-semibold text-white leading-snug group-hover:text-brand transition-colors">

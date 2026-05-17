@@ -47,10 +47,10 @@ export default function VisualizationPanel({ type, params, category }: Props) {
     return (
       <div className="h-full flex flex-col items-center justify-center gap-3 text-center px-4">
         <div className="text-4xl">{panel.icon}</div>
-        <p className="text-sm text-neutral-600 leading-relaxed font-medium">{panel.title}</p>
+        <p className="text-sm text-neutral-500 leading-relaxed font-medium">{panel.title}</p>
         <div className="mt-3 grid grid-cols-2 gap-2 w-full text-xs">
           {panel.values.map((v) => (
-            <div key={v} className="bg-white/[0.04] border border-white/[0.06] rounded-xl p-2.5 text-neutral-500 text-center tracking-wide">
+            <div key={v} className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-2.5 text-neutral-500 text-center tracking-wide">
               {v}
             </div>
           ))}

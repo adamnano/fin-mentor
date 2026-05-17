@@ -16,7 +16,7 @@ interface Props {
   params: EfficientFrontierParams;
 }
 
-const COLORS = ["#E63C3A", "#38bdf8", "#4ade80", "#a78bfa", "#fb923c"];
+const COLORS = ["#8B9130", "#38bdf8", "#4ade80", "#a78bfa", "#fb923c"];
 
 export default function EfficientFrontierChart({ params }: Props) {
   const { assets, riskFreeRate } = params;
@@ -33,7 +33,6 @@ export default function EfficientFrontierChart({ params }: Props) {
     [assets, riskFreeRate]
   );
 
-
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -47,31 +46,30 @@ export default function EfficientFrontierChart({ params }: Props) {
 
       <ResponsiveContainer width="100%" height={148}>
         <ScatterChart margin={{ top: 10, right: 10, left: 10, bottom: 10 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.07)" />
           <XAxis
             dataKey="stddev"
             type="number"
             name="Risk (σ)"
-            stroke="#94a3b8"
+            stroke="#71717a"
             tick={{ fontSize: 11 }}
             domain={["auto", "auto"]}
-            label={{ value: "Risk (σ %)", position: "insideBottom", offset: -2, fill: "#94a3b8", fontSize: 11 }}
+            label={{ value: "Risk (σ %)", position: "insideBottom", offset: -2, fill: "#71717a", fontSize: 11 }}
             tickFormatter={(v) => `${v}%`}
           />
           <YAxis
             dataKey="return"
             type="number"
             name="Return"
-            stroke="#94a3b8"
+            stroke="#71717a"
             tick={{ fontSize: 11 }}
-            label={{ value: "Return %", angle: -90, position: "insideLeft", fill: "#94a3b8", fontSize: 11 }}
+            label={{ value: "Return %", angle: -90, position: "insideLeft", fill: "#71717a", fontSize: 11 }}
             tickFormatter={(v) => `${v}%`}
           />
           <Tooltip
             cursor={{ strokeDasharray: "3 3" }}
-            contentStyle={{ background: "#1a1a1a", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8 }}
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            formatter={(v: any, name: any) => [`${v}%`, name]}
+            contentStyle={{ background: "var(--tooltip-bg)", border: "1px solid var(--tooltip-border)", borderRadius: 10, fontSize: 12 }}
+            formatter={(v: unknown, name: unknown) => [`${v}%`, name as string]}
           />
           {assets.map((asset, i) => (
             <Scatter
@@ -85,17 +83,14 @@ export default function EfficientFrontierChart({ params }: Props) {
         </ScatterChart>
       </ResponsiveContainer>
 
-      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/10">
+      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-white/[0.07]">
         {sharpeRatios.map((a, i) => (
           <div key={a.name} className="flex items-center gap-2">
-            <span
-              className="w-2 h-2 rounded-full shrink-0"
-              style={{ backgroundColor: COLORS[i % COLORS.length] }}
-            />
+            <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: COLORS[i % COLORS.length] }} />
             <div className="text-xs">
               <span className="text-neutral-400">{a.name}</span>
-              <span className="text-neutral-700 ml-1">
-                Sharpe: <span className="text-red-400 font-mono">{a.sharpe}</span>
+              <span className="text-neutral-600 ml-1">
+                Sharpe: <span className="text-brand font-mono">{a.sharpe}</span>
               </span>
             </div>
           </div>

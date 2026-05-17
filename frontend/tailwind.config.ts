@@ -11,11 +11,11 @@ const config: Config = {
     extend: {
       colors: {
         brand: {
-          DEFAULT: "#E63C3A",
-          light: "#ff6b69",
-          dark: "#c4302e",
-          muted: "rgba(230,60,58,0.12)",
-          border: "rgba(230,60,58,0.25)",
+          DEFAULT: "#8B9130",
+          light: "#A4AC3A",
+          dark: "#6E7227",
+          muted: "rgba(139, 145, 48, 0.12)",
+          border: "rgba(139, 145, 48, 0.28)",
         },
         surface: {
           DEFAULT: "var(--surface)",
@@ -31,6 +31,10 @@ const config: Config = {
       spacing: {
         "88": "22rem",
         "104": "26rem",
+      },
+      borderRadius: {
+        "2xl": "1rem",
+        "3xl": "1.25rem",
       },
     },
   },
