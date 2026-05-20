@@ -243,7 +243,7 @@ export default function AboutPage() {
         <Section title="What it doesn't do (yet)">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
-              { label: "No RAG", desc: "The AI has no access to TABF materials or CFA curriculum PDFs. Questions and answers come entirely from the LLM's training data plus the prompt." },
+              { label: "No RAG", desc: "RAG means searching a knowledge base at query time and injecting the results into the prompt. That doesn't happen here — the AI generates questions from its training data, and the question bank in the DB is only a fallback when generation fails, not a source the LLM retrieves from." },
               { label: "No user accounts", desc: "All scores and sessions are stored globally — there's no login, no per-user data separation." },
               { label: "No mobile layout", desc: "The three-column desktop layout doesn't adapt well to small screens. A mobile-first redesign is possible but not done." },
             ].map((item) => (
