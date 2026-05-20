@@ -7,39 +7,12 @@ export const metadata = {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <section className="mb-14">
-      <h2 className="text-[10px] font-semibold text-neutral-600 uppercase tracking-widest mb-6 pb-3 border-b border-white/[0.06]">
+    <section className="mb-12">
+      <h2 className="text-[10px] font-semibold text-neutral-600 uppercase tracking-widest mb-5 pb-3 border-b border-white/[0.06]">
         {title}
       </h2>
       {children}
     </section>
-  );
-}
-
-function FeatureCard({ icon, title, desc }: { icon: string; title: string; desc: string }) {
-  return (
-    <div className="bg-surface-1 border border-white/[0.07] rounded-2xl p-5 hover:border-white/[0.12] transition-colors">
-      <div className="text-2xl mb-3">{icon}</div>
-      <h3 className="text-sm font-semibold text-white mb-2">{title}</h3>
-      <p className="text-xs text-neutral-500 leading-relaxed">{desc}</p>
-    </div>
-  );
-}
-
-function Box({ label, sub, accent }: { label: string; sub?: string; accent?: string }) {
-  return (
-    <div className={`rounded-xl border px-4 py-3 text-center bg-surface ${accent ?? "border-white/[0.10]"}`}>
-      <p className="text-xs font-semibold text-white">{label}</p>
-      {sub && <p className="text-[10px] text-neutral-600 mt-0.5">{sub}</p>}
-    </div>
-  );
-}
-
-function Arrow() {
-  return (
-    <div className="flex justify-center my-1">
-      <span className="text-neutral-700 text-lg">↓</span>
-    </div>
   );
 }
 
@@ -49,7 +22,7 @@ export default function AboutPage() {
 
       {/* Nav */}
       <nav className="sticky top-0 z-10 border-b border-white/[0.06] bg-surface-1 backdrop-blur-sm">
-        <div className="max-w-5xl mx-auto px-6 py-3.5 flex items-center justify-between">
+        <div className="max-w-4xl mx-auto px-6 py-3.5 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-7 h-7 rounded-lg overflow-hidden border border-white/[0.08]">
               <Image src="/tabf-logo.png" alt="TABF" width={28} height={28} className="w-full h-full object-cover" />
@@ -58,248 +31,207 @@ export default function AboutPage() {
             <span className="text-neutral-600 mx-1">·</span>
             <span className="text-xs text-neutral-500">About</span>
           </div>
-          <Link href="/" className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors shadow-sm shadow-brand/20">
+          <Link href="/" className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors">
             ← Back to Training
           </Link>
         </div>
       </nav>
 
-      <div className="max-w-5xl mx-auto px-6 py-14">
+      <div className="max-w-4xl mx-auto px-6 py-12">
 
-        {/* Hero */}
-        <div className="mb-16">
-          <div className="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-widest px-3 py-1.5 rounded-full mb-6 bg-brand-muted border border-brand/25 text-brand">
-            Taiwan Academy of Banking and Finance
-          </div>
-          <h1 className="text-4xl font-black text-white mb-4 tracking-tight">TABF FinMentor</h1>
-          <p className="text-neutral-400 text-base max-w-2xl leading-relaxed">
-            An AI-powered adaptive training platform for financial certification candidates —
-            combining local LLM generation, interactive visualisations, and a contextual AI tutor.
+        {/* Header */}
+        <div className="mb-12">
+          <h1 className="text-3xl font-black text-white mb-3">TABF FinMentor</h1>
+          <p className="text-neutral-400 text-sm leading-relaxed max-w-2xl">
+            A CFA exam practice tool built for the Taiwan Academy of Banking and Finance.
+            It generates questions on demand using an LLM, records your answers in a database,
+            and lets you chat with an AI tutor about each question.
           </p>
-          <div className="flex items-center gap-6 mt-8 text-xs text-neutral-600">
-            <span>11 Topic Areas</span>
-            <span className="w-1 h-1 rounded-full bg-neutral-700" />
-            <span>8 Interactive Charts</span>
-            <span className="w-1 h-1 rounded-full bg-neutral-700" />
-            <span>AI Question Generation</span>
-            <span className="w-1 h-1 rounded-full bg-neutral-700" />
-            <span>Streaming AI Tutor</span>
-          </div>
         </div>
 
-        {/* Features */}
-        <Section title="Product Features">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <FeatureCard icon="🎯" title="Adaptive MCQ Practice"
-              desc="AI generates fresh CFA-style multiple-choice questions on demand, tailored to topic, difficulty level (L1/L2/L3), and the candidate's weak areas — never the same question twice." />
-            <FeatureCard icon="🃏" title="Flashcard Mode"
-              desc="Flip-card format for rapid concept review. Candidates mark cards as 'Got It' or 'Review Again', building a spaced-repetition intuition before exam day." />
-            <FeatureCard icon="📊" title="8 Interactive Visualisations"
-              desc="Drag sliders to see compound growth curves, bond price-yield relationships, options payoff diagrams, ESG radar charts, risk matrices, and more — in real time." />
-            <FeatureCard icon="🤖" title="Streaming AI Tutor"
-              desc="A context-aware chat panel explains the current question, walks through formulas step-by-step, and answers follow-up questions — with full knowledge of the question and correct answer." />
-            <FeatureCard icon="💡" title="Smart Study Path"
-              desc="After each answer, the system analyses score history and surfaces a smart recommendation: 'Your weakest area is Risk Management (42%) — drill it next?' One click to accept." />
-            <FeatureCard icon="🌱" title="ESG & New Finance Topics"
-              desc="Beyond classic CFA curriculum: questions on ESG scoring, TCFD, Basel III capital requirements, AML/KYC frameworks, FATF recommendations — critical for modern banking professionals." />
-            <FeatureCard icon="📡" title="Exhibition Demo Mode"
-              desc="One-click mode for trade show screens: the app auto-cycles through questions, auto-answers, and moves on — no human needed. Designed for TABF's October exhibition." />
-            <FeatureCard icon="📈" title="Progress Analytics"
-              desc="A radar chart in the sidebar shows accuracy across all 11 topic areas at a glance. Colour-coded category bars (red/amber/green) show where the candidate stands." />
-            <FeatureCard icon="🏦" title="Banking-Focused Coverage"
-              desc="Covers both international certifications (CFA) and banking-specific domains — Compliance & AML, Risk Management, ESG — aligned with TABF's own proficiency testing areas." />
-          </div>
-        </Section>
-
-        {/* System Architecture */}
-        <Section title="System Architecture">
-          <p className="text-xs text-neutral-500 mb-8 leading-relaxed max-w-2xl">
-            The platform is built as a 3-tier system: a Next.js 14 frontend, a Python FastAPI backend, and a PostgreSQL data layer. AI inference runs entirely on-device via Ollama — no external API calls, no data leaves the server.
+        {/* How it works */}
+        <Section title="How it works">
+          <p className="text-xs text-neutral-500 leading-relaxed mb-6 max-w-2xl">
+            Three tiers: a Next.js frontend, a Python FastAPI backend that handles all AI calls, and a PostgreSQL database.
+            The frontend never calls OpenAI directly — everything goes through the Python backend.
           </p>
 
-          <div className="bg-surface border border-white/[0.07] rounded-2xl p-8 overflow-x-auto">
-            <div className="min-w-[640px]">
+          {/* Architecture diagram */}
+          <div className="rounded-2xl border border-white/[0.07] bg-surface overflow-hidden">
 
-              <div className="flex justify-center mb-2">
-                <div className="bg-surface-2 border border-white/[0.10] rounded-xl px-6 py-3 text-center">
-                  <p className="text-xs font-semibold text-white">User Browser</p>
-                  <p className="text-[10px] text-neutral-600 mt-0.5">React 18 · Recharts · Tailwind CSS</p>
+            {/* Browser row */}
+            <div className="flex items-center justify-center px-8 py-5 border-b border-white/[0.06]">
+              <div className="text-center">
+                <p className="text-xs font-semibold text-white">Browser</p>
+                <p className="text-[10px] text-neutral-600 mt-0.5">React 18 · Recharts · Tailwind</p>
+              </div>
+            </div>
+
+            <div className="flex divide-x divide-white/[0.06]">
+              {/* Next.js column */}
+              <div className="flex-1 p-5">
+                <p className="text-[10px] font-semibold text-brand uppercase tracking-widest mb-4">Next.js 14</p>
+                <div className="space-y-2">
+                  {[
+                    ["Pages", "/, /stats, /roadmap, /about"],
+                    ["Server components", "query DB directly (stats, scores)"],
+                    ["API routes", "proxy layer to Python backend"],
+                    ["State", "useReducer in useAppState hook"],
+                  ].map(([k, v]) => (
+                    <div key={k}>
+                      <span className="text-[10px] font-semibold text-neutral-400">{k} </span>
+                      <span className="text-[10px] text-neutral-600">{v}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-              <Arrow />
 
-              <div className="border border-brand/25 rounded-2xl p-5 bg-brand-muted mb-2">
-                <p className="text-[10px] text-brand font-semibold uppercase tracking-widest mb-4 text-center">Next.js 14 — App Router</p>
-                <div className="grid grid-cols-3 gap-3 mb-4">
-                  <Box label="Server Components" sub="SSR · prefetch scores" />
-                  <Box label="Client Components" sub="AppShell · Charts · Chat" />
-                  <Box label="API Routes" sub="/api/* proxy layer" />
-                </div>
-                <div className="grid grid-cols-4 gap-2">
-                  <Box label="/api/questions" sub="GET · DB query" />
-                  <Box label="/api/sessions" sub="POST · save answer" />
-                  <Box label="/api/scores" sub="GET · all scores" />
-                  <Box label="/api/ai/*" sub="proxy to Python" />
+              {/* Python column */}
+              <div className="flex-1 p-5">
+                <p className="text-[10px] font-semibold text-emerald-400 uppercase tracking-widest mb-4">Python FastAPI · port 8000</p>
+                <div className="space-y-2">
+                  {[
+                    ["POST /generate", "build prompt → OpenAI → parse JSON"],
+                    ["POST /chat", "question context → OpenAI stream"],
+                    ["GET /news/headlines", "RSS feed fetch"],
+                    ["POST /news/analyze", "article text → OpenAI stream"],
+                    ["POST /news/discuss", "article discussion stream"],
+                  ].map(([k, v]) => (
+                    <div key={k}>
+                      <code className="text-[10px] font-mono text-emerald-400">{k}</code>
+                      <span className="text-[10px] text-neutral-600"> — {v}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-6">
-                <div className="flex flex-col">
-                  <Arrow />
-                  <div className="border border-sky-500/25 rounded-2xl p-4 bg-sky-500/5">
-                    <p className="text-[10px] text-sky-400 font-semibold uppercase tracking-widest mb-3 text-center">PostgreSQL · DrizzleORM</p>
-                    <div className="space-y-2">
-                      <Box label="questions" sub="seed questions · jsonb params" accent="border-sky-500/20" />
-                      <Box label="user_sessions" sub="per-answer log" accent="border-sky-500/20" />
-                      <Box label="user_scores" sub="UNIQUE(category, level) upsert" accent="border-sky-500/20" />
+              {/* DB column */}
+              <div className="flex-1 p-5">
+                <p className="text-[10px] font-semibold text-sky-400 uppercase tracking-widest mb-4">PostgreSQL · Drizzle ORM</p>
+                <div className="space-y-3">
+                  {[
+                    { table: "questions", desc: "seed questions with category, level, choices, correct answer, visualization params" },
+                    { table: "user_sessions", desc: "one row per answered question — answer given, correct/wrong, time spent" },
+                    { table: "user_scores", desc: "running totals per category+level, upserted on each answer" },
+                  ].map((t) => (
+                    <div key={t.table}>
+                      <code className="text-[10px] font-mono text-sky-400">{t.table}</code>
+                      <p className="text-[10px] text-neutral-600 mt-0.5">{t.desc}</p>
                     </div>
-                  </div>
-                </div>
-                <div className="flex flex-col">
-                  <Arrow />
-                  <div className="border border-emerald-500/25 rounded-2xl p-4 bg-emerald-500/5">
-                    <p className="text-[10px] text-emerald-400 font-semibold uppercase tracking-widest mb-3 text-center">Python FastAPI · Port 8000</p>
-                    <div className="space-y-2">
-                      <Box label="POST /generate" sub="JSON question · 2 retries" accent="border-emerald-500/20" />
-                      <Box label="POST /chat" sub="StreamingResponse · text/plain" accent="border-emerald-500/20" />
-                      <Arrow />
-                      <Box label="Ollama · localhost:11434" sub="llama3.2:1b · gpt-oss:20b" accent="border-emerald-500/30" />
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
         </Section>
 
-        {/* AI Pipeline */}
-        <Section title="AI Pipeline — Question Generation">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-0 items-stretch">
+        {/* Question generation */}
+        <Section title="Question generation">
+          <div className="flex items-stretch gap-0">
             {[
-              { step: "1", label: "Request", desc: "User selects category + level. Frontend picks a random category from the active filter and POSTs to /api/ai/generate." },
-              { step: "2", label: "Prompt Build", desc: "FastAPI constructs a structured prompt with category guidance, CFA-style requirements, and explicit JSON schema. No markdown allowed." },
-              { step: "3", label: "LLM Inference", desc: "Ollama runs the local model (llama3.2:1b or gpt-oss:20b). No tokens leave the machine — full data privacy." },
-              { step: "4", label: "JSON Extraction", desc: "Response is parsed with a regex fallback (extract_json) in case the model wraps output in prose. 2 retries on parse failure." },
-              { step: "5", label: "Deliver", desc: "Validated question JSON returns to Next.js, which merges in default visualisation params and serves it to the client." },
-            ].map((item, i, arr) => (
-              <div key={item.step} className="flex items-stretch">
-                <div className="bg-surface-1 border border-white/[0.07] rounded-2xl p-4 flex-1">
-                  <div className="w-6 h-6 rounded-full bg-brand-muted border border-brand/35 flex items-center justify-center mb-3">
-                    <span className="text-[10px] font-bold text-brand">{item.step}</span>
+              { n: "1", label: "Request", text: "User picks a category + level (or it's chosen randomly from active filters). Frontend POSTs to /api/ai/generate." },
+              { n: "2", label: "Prompt", text: "FastAPI builds a structured prompt: CFA exam expert persona, the category, difficulty level, and a strict JSON output schema." },
+              { n: "3", label: "OpenAI call", text: "gpt-4.1-mini is called synchronously. No streaming here — we need the full JSON before we can show anything." },
+              { n: "4", label: "Parse", text: "Response is JSON-extracted with a regex fallback (models sometimes wrap output in prose). 2 retries on failure." },
+              { n: "5", label: "Fallback", text: "If both retries fail, a random question is pulled from the seed database instead." },
+            ].map((step, i, arr) => (
+              <div key={step.n} className="flex items-stretch flex-1">
+                <div className="flex-1 bg-surface-1 border border-white/[0.07] p-4 rounded-none first:rounded-l-2xl last:rounded-r-2xl">
+                  <div className="w-5 h-5 rounded-full bg-brand-muted border border-brand/30 flex items-center justify-center mb-3">
+                    <span className="text-[9px] font-bold text-brand">{step.n}</span>
                   </div>
-                  <p className="text-xs font-semibold text-white mb-1.5">{item.label}</p>
-                  <p className="text-[11px] text-neutral-500 leading-relaxed">{item.desc}</p>
+                  <p className="text-xs font-semibold text-white mb-1">{step.label}</p>
+                  <p className="text-[11px] text-neutral-500 leading-relaxed">{step.text}</p>
                 </div>
                 {i < arr.length - 1 && (
-                  <div className="flex items-center px-2 text-neutral-700 text-lg shrink-0">→</div>
+                  <div className="flex items-center text-neutral-700 px-1 shrink-0">→</div>
                 )}
               </div>
             ))}
           </div>
+        </Section>
 
-          <div className="mt-6 bg-surface-1 border border-white/[0.07] rounded-2xl p-5">
-            <p className="text-xs font-semibold text-white mb-3">AI Tutor — Streaming Chat Pipeline</p>
-            <div className="flex flex-wrap items-center gap-2 text-xs">
-              {[
-                "User types message",
-                "Next.js /api/ai/chat",
-                "FastAPI /chat",
-                "Ollama stream_completion()",
-                "AsyncGenerator yields chunks",
-                "StreamingResponse (text/plain)",
-                "Response.body piped directly",
-                "Typewriter effect in browser",
-              ].map((step, i, arr) => (
-                <span key={step} className="flex items-center gap-2">
-                  <span className="bg-surface-2 border border-white/[0.07] rounded-lg px-2.5 py-1 text-neutral-400">{step}</span>
-                  {i < arr.length - 1 && <span className="text-neutral-700">→</span>}
-                </span>
-              ))}
-            </div>
-            <p className="text-[11px] text-neutral-600 mt-3">
-              The chat route passes <code className="text-neutral-400 bg-white/[0.05] px-1 py-0.5 rounded">pythonResponse.body</code> directly
-              as a <code className="text-neutral-400 bg-white/[0.05] px-1 py-0.5 rounded">ReadableStream</code> — never buffered — so the first token appears in under 100ms.
-            </p>
+        {/* Chat streaming */}
+        <Section title="AI tutor chat">
+          <p className="text-xs text-neutral-500 mb-4 leading-relaxed max-w-2xl">
+            The chat panel sends the full current question (text, all three choices, correct answer, explanation)
+            plus the last 6 messages of conversation history. FastAPI pipes the OpenAI stream directly back
+            — the Next.js route passes <code className="text-neutral-400 bg-white/[0.06] px-1 py-0.5 rounded text-[11px]">response.body</code> as
+            a <code className="text-neutral-400 bg-white/[0.06] px-1 py-0.5 rounded text-[11px]">ReadableStream</code> without buffering,
+            so the first token arrives in under 100ms. The frontend accumulates chunks and re-renders on each one.
+            Responses are rendered with react-markdown + KaTeX so LaTeX formulas display correctly.
+          </p>
+          <div className="flex flex-wrap items-center gap-2">
+            {[
+              "User types",
+              "/api/ai/chat (Next.js proxy)",
+              "FastAPI /chat",
+              "OpenAI stream",
+              "StreamingResponse",
+              "ReadableStream to browser",
+              "Incremental render + LaTeX",
+            ].map((step, i, arr) => (
+              <span key={step} className="flex items-center gap-2">
+                <span className="text-[11px] bg-surface-1 border border-white/[0.07] rounded-lg px-2.5 py-1 text-neutral-400">{step}</span>
+                {i < arr.length - 1 && <span className="text-neutral-700 text-xs">→</span>}
+              </span>
+            ))}
           </div>
         </Section>
 
-        {/* Security */}
-        <Section title="Security & Output Validation">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h3 className="text-xs font-semibold text-white mb-4">Attack Prevention</h3>
-              <div className="space-y-3">
-                {[
-                  { threat: "Prompt Injection", severity: "High",
-                    mitigation: "User input is wrapped in a structured system prompt with clearly delimited boundaries. The model is instructed to treat injected instructions as data, not commands." },
-                  { threat: "Jailbreak / Policy Bypass", severity: "Medium",
-                    mitigation: "All prompts include explicit role-locking. Outputs are validated against expected structure (JSON schema for questions, plaintext for chat) before being served." },
-                  { threat: "Data Exfiltration", severity: "Low",
-                    mitigation: "Ollama runs fully on-device (localhost:11434). No user data, responses, or chat history is sent to external APIs. The architecture is air-gap friendly." },
-                  { threat: "SQL Injection", severity: "Low",
-                    mitigation: "All database queries use DrizzleORM with parameterised queries. No raw SQL string interpolation anywhere in the codebase." },
-                ].map((item) => (
-                  <div key={item.threat} className="bg-surface-1 border border-white/[0.07] rounded-xl p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <p className="text-xs font-semibold text-white">{item.threat}</p>
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${
-                        item.severity === "High" ? "bg-brand-muted text-brand border border-brand/25" :
-                        item.severity === "Medium" ? "bg-amber-500/12 text-amber-400 border border-amber-500/25" :
-                        "bg-emerald-500/12 text-emerald-400 border border-emerald-500/25"
-                      }`}>{item.severity}</span>
-                    </div>
-                    <p className="text-[11px] text-neutral-500 leading-relaxed">{item.mitigation}</p>
-                  </div>
-                ))}
+        {/* Visualisations */}
+        <Section title="Visualisations">
+          <p className="text-xs text-neutral-500 mb-4 leading-relaxed max-w-2xl">
+            Each question category maps to a fixed chart type. The chart params come from the AI-generated question
+            (or seed DB). Sliders let you explore the chart interactively — initial values are intentionally offset
+            from the correct answer so you have to adjust them.
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { cat: "TVM", chart: "FV/PV compound growth" },
+              { cat: "Fixed Income", chart: "Yield curve" },
+              { cat: "Derivatives", chart: "Options payoff" },
+              { cat: "Portfolio Mgmt", chart: "Efficient frontier" },
+              { cat: "Economics", chart: "Supply & demand" },
+              { cat: "FSA", chart: "Balance sheet bars" },
+              { cat: "Risk Management", chart: "Risk matrix scatter" },
+              { cat: "ESG", chart: "ESG radar chart" },
+            ].map((v) => (
+              <div key={v.cat} className="bg-surface-1 border border-white/[0.07] rounded-xl p-3">
+                <p className="text-[10px] font-semibold text-white">{v.cat}</p>
+                <p className="text-[10px] text-neutral-600 mt-0.5">{v.chart}</p>
               </div>
-            </div>
-            <div>
-              <h3 className="text-xs font-semibold text-white mb-4">Output Quality Validation</h3>
-              <div className="space-y-3">
-                {[
-                  { label: "JSON Schema Enforcement", desc: "AI questions must conform to a strict schema: question_text, choice_a/b/c, correct_answer (A/B/C only), explanation. Any deviation triggers a retry." },
-                  { label: "extract_json() Fallback", desc: "A regex fallback extracts valid JSON from responses that include surrounding prose — common with smaller models like llama3.2:1b." },
-                  { label: "2-Retry Logic", desc: "If JSON parsing fails on the first attempt, the full prompt is retried. After 2 failures the API falls back to a random seed question from the database." },
-                  { label: "Answer Validation", desc: "correct_answer is forced to uppercase and must be exactly 'A', 'B', or 'C'. Any other value triggers the seed fallback." },
-                  { label: "Score Integrity", desc: "Session records use database transactions — score upsert and session insert are atomic. A crash mid-transaction does not produce partial state." },
-                ].map((item) => (
-                  <div key={item.label} className="bg-surface-1 border border-white/[0.07] rounded-xl p-4">
-                    <p className="text-xs font-semibold text-emerald-400 mb-1.5">{item.label}</p>
-                    <p className="text-[11px] text-neutral-500 leading-relaxed">{item.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
         </Section>
 
-        {/* Tech Stack */}
-        <Section title="Technology Stack">
+        {/* Tech stack */}
+        <Section title="Tech stack">
           <div className="overflow-hidden rounded-2xl border border-white/[0.07]">
-            <table className="w-full text-sm">
+            <table className="w-full">
               <thead>
                 <tr className="border-b border-white/[0.07] bg-surface-1">
                   <th className="text-left px-5 py-3 text-[10px] font-semibold text-neutral-600 uppercase tracking-widest">Layer</th>
-                  <th className="text-left px-5 py-3 text-[10px] font-semibold text-neutral-600 uppercase tracking-widest">Technology</th>
-                  <th className="text-left px-5 py-3 text-[10px] font-semibold text-neutral-600 uppercase tracking-widest">Role</th>
+                  <th className="text-left px-5 py-3 text-[10px] font-semibold text-neutral-600 uppercase tracking-widest">What</th>
+                  <th className="text-left px-5 py-3 text-[10px] font-semibold text-neutral-600 uppercase tracking-widest">Why</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/[0.04]">
                 {[
-                  ["Frontend", "Next.js 14 · App Router", "SSR pages, API proxy routes, streaming"],
-                  ["UI", "React 18 · TypeScript · Tailwind CSS", "Component tree, type safety, styling"],
-                  ["Charts", "Recharts", "8 interactive financial visualisations"],
-                  ["State", "useReducer (custom hook)", "All app state — no external state library"],
-                  ["Database", "PostgreSQL 16 · Docker", "Questions, sessions, scores"],
-                  ["ORM", "DrizzleORM · postgres driver", "Type-safe SQL, schema push, seed"],
-                  ["AI Backend", "Python FastAPI", "Question generation, streaming chat proxy"],
-                  ["LLM Runtime", "Ollama", "Local inference — llama3.2:1b / gpt-oss:20b"],
-                  ["Font", "DM Sans (Google Fonts)", "Clean modern financial aesthetic"],
-                ].map(([layer, tech, role]) => (
+                  ["Frontend", "Next.js 14 + React 18 + TypeScript", "App Router, server components, streaming-compatible API routes"],
+                  ["Styling", "Tailwind CSS + CSS variables", "Dark/light theming via surface tokens"],
+                  ["Charts", "Recharts", "8 interactive financial charts with Recharts + custom sliders"],
+                  ["Math rendering", "react-markdown + KaTeX", "LaTeX formulas in chat responses rendered properly"],
+                  ["State", "useReducer (no external library)", "All UI state in one hook — mode, answers, scores, chat history"],
+                  ["Database", "PostgreSQL + DrizzleORM", "Type-safe queries, schema migrations, question + session storage"],
+                  ["AI backend", "Python FastAPI", "Handles all OpenAI calls, streaming, news fetching"],
+                  ["LLM", "OpenAI gpt-4.1-mini", "Question generation and chat; called via OpenAI Python SDK"],
+                  ["Infra", "Docker Compose", "Runs Postgres locally; backend and frontend run separately"],
+                ].map(([layer, what, why]) => (
                   <tr key={layer} className="bg-surface hover:bg-surface-1 transition-colors">
-                    <td className="px-5 py-3 text-xs text-neutral-500 font-medium">{layer}</td>
-                    <td className="px-5 py-3 text-xs text-white font-mono">{tech}</td>
-                    <td className="px-5 py-3 text-xs text-neutral-600">{role}</td>
+                    <td className="px-5 py-3 text-xs text-neutral-500 font-medium whitespace-nowrap">{layer}</td>
+                    <td className="px-5 py-3 text-xs text-white font-mono">{what}</td>
+                    <td className="px-5 py-3 text-xs text-neutral-600">{why}</td>
                   </tr>
                 ))}
               </tbody>
@@ -307,48 +239,25 @@ export default function AboutPage() {
           </div>
         </Section>
 
-        {/* Use Cases */}
-        <Section title="Use Cases & Target Audience">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {/* What it doesn't do */}
+        <Section title="What it doesn't do (yet)">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {[
-              { audience: "CFA Candidates", icon: "🎓", scenarios: [
-                "Daily MCQ practice across all 11 curriculum areas",
-                "Flashcard review of formulas and definitions",
-                "Ask the AI tutor to walk through a calculation step-by-step",
-                "Identify weak areas via the radar analytics chart",
-              ]},
-              { audience: "Banking Professionals", icon: "🏦", scenarios: [
-                "Regulatory compliance and AML scenario training",
-                "Risk management — Basel III, VaR interpretation",
-                "ESG integration and sustainable finance concepts",
-                "Level-appropriate questions (L1 refresher → L3 advanced)",
-              ]},
-              { audience: "TABF Exhibition", icon: "🖥️", scenarios: [
-                "One-click Exhibition Demo Mode for unattended screens",
-                "Showcases AI question generation live to visitors",
-                "Interactive chart demos — visitors can move sliders",
-                "AI tutor conversation demonstrates real-time streaming",
-              ]},
+              { label: "No RAG", desc: "The AI has no access to TABF materials or CFA curriculum PDFs. Questions and answers come entirely from the LLM's training data plus the prompt." },
+              { label: "No user accounts", desc: "All scores and sessions are stored globally — there's no login, no per-user data separation." },
+              { label: "No mobile layout", desc: "The three-column desktop layout doesn't adapt well to small screens. A mobile-first redesign is possible but not done." },
             ].map((item) => (
-              <div key={item.audience} className="bg-surface-1 border border-white/[0.07] rounded-2xl p-5">
-                <div className="text-2xl mb-3">{item.icon}</div>
-                <h3 className="text-sm font-semibold text-white mb-3">{item.audience}</h3>
-                <ul className="space-y-2">
-                  {item.scenarios.map((s) => (
-                    <li key={s} className="flex items-start gap-2 text-[11px] text-neutral-500">
-                      <span className="text-brand mt-0.5 shrink-0">·</span>
-                      {s}
-                    </li>
-                  ))}
-                </ul>
+              <div key={item.label} className="bg-surface-1 border border-white/[0.07] rounded-xl p-4">
+                <p className="text-xs font-semibold text-white mb-1.5">{item.label}</p>
+                <p className="text-[11px] text-neutral-500 leading-relaxed">{item.desc}</p>
               </div>
             ))}
           </div>
         </Section>
 
         {/* Footer */}
-        <div className="border-t border-white/[0.06] pt-8 flex items-center justify-between">
-          <p className="text-xs text-neutral-700">TABF FinMentor · Built for Taiwan Academy of Banking and Finance</p>
+        <div className="flex items-center justify-between pt-8 border-t border-white/[0.06]">
+          <p className="text-xs text-neutral-700">TABF FinMentor · Taiwan Academy of Banking and Finance</p>
           <Link href="/" className="px-4 py-2 text-xs font-semibold rounded-xl bg-brand text-white hover:bg-brand-light transition-colors">
             ← Back to Training
           </Link>
