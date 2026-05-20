@@ -263,6 +263,93 @@ function ClusterDiagram() {
   );
 }
 
+// ── RAG Pipeline Diagram ──────────────────────────────────────────────────────
+function RAGDiagram() {
+  const nodeW = 96;
+  const nodeH = 36;
+  const rx = 8;
+  const arrowColor = "rgba(255,255,255,0.2)";
+  const accent = "#06b6d4";
+
+  // Ingestion row (top): one-time setup
+  const ingestionNodes = [
+    { x: 20,  label: "TABF Docs", sub: "PDFs, materials" },
+    { x: 148, label: "Chunking", sub: "~500 token splits" },
+    { x: 276, label: "Embed", sub: "text-embedding-3" },
+    { x: 404, label: "pgvector DB", sub: "stored vectors" },
+  ];
+
+  // Query row (bottom): per chat message
+  const queryNodes = [
+    { x: 20,  label: "User Question", sub: "chat message" },
+    { x: 148, label: "Embed", sub: "same model" },
+    { x: 276, label: "Top-k Search", sub: "cosine similarity" },
+    { x: 404, label: "Inject + LLM", sub: "grounded answer" },
+  ];
+
+  const rowY1 = 28;   // ingestion row center
+  const rowY2 = 112;  // query row center
+
+  return (
+    <svg viewBox="0 0 560 155" className="w-full" style={{ maxHeight: 180 }}>
+      <defs>
+        <marker id="rag-arr" markerWidth={6} markerHeight={6} refX={5} refY={3} orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill={arrowColor} />
+        </marker>
+        <marker id="rag-arr-accent" markerWidth={6} markerHeight={6} refX={5} refY={3} orient="auto">
+          <path d="M0,0 L0,6 L6,3 z" fill={`${accent}80`} />
+        </marker>
+      </defs>
+
+      {/* Row labels */}
+      <text x={530} y={rowY1 + 5} textAnchor="end" fill="rgba(255,255,255,0.2)" fontSize={8} fontWeight="600">ONE-TIME</text>
+      <text x={530} y={rowY2 + 5} textAnchor="end" fill={`${accent}90`} fontSize={8} fontWeight="600">PER MESSAGE</text>
+
+      {/* Ingestion nodes */}
+      {ingestionNodes.map((n, i) => (
+        <g key={n.label + i}>
+          <rect x={n.x} y={rowY1 - nodeH / 2} width={nodeW} height={nodeH} rx={rx}
+            fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.10)" strokeWidth={1} />
+          <text x={n.x + nodeW / 2} y={rowY1 - 4} textAnchor="middle" fill="rgba(255,255,255,0.75)" fontSize={9} fontWeight="600">{n.label}</text>
+          <text x={n.x + nodeW / 2} y={rowY1 + 9} textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize={8}>{n.sub}</text>
+          {i < ingestionNodes.length - 1 && (
+            <line x1={n.x + nodeW + 2} y1={rowY1} x2={n.x + nodeW + 28} y2={rowY1}
+              stroke={arrowColor} strokeWidth={1.2} markerEnd="url(#rag-arr)" />
+          )}
+        </g>
+      ))}
+
+      {/* Vertical connector: pgvector feeds query row */}
+      <line x1={404 + nodeW / 2} y1={rowY1 + nodeH / 2 + 1} x2={404 + nodeW / 2} y2={rowY2 - nodeH / 2 - 2}
+        stroke={`${accent}50`} strokeWidth={1} strokeDasharray="3 2" markerEnd="url(#rag-arr-accent)" />
+
+      {/* Query nodes */}
+      {queryNodes.map((n, i) => (
+        <g key={n.label + "-q-" + i}>
+          <rect x={n.x} y={rowY2 - nodeH / 2} width={nodeW} height={nodeH} rx={rx}
+            fill={`${accent}10`} stroke={`${accent}35`} strokeWidth={1} />
+          <text x={n.x + nodeW / 2} y={rowY2 - 4} textAnchor="middle" fill="rgba(255,255,255,0.85)" fontSize={9} fontWeight="600">{n.label}</text>
+          <text x={n.x + nodeW / 2} y={rowY2 + 9} textAnchor="middle" fill={`${accent}80`} fontSize={8}>{n.sub}</text>
+          {i < queryNodes.length - 1 && (
+            <line x1={n.x + nodeW + 2} y1={rowY2} x2={n.x + nodeW + 28} y2={rowY2}
+              stroke={`${accent}60`} strokeWidth={1.2} markerEnd="url(#rag-arr-accent)" />
+          )}
+        </g>
+      ))}
+
+      {/* Row divider */}
+      <line x1={0} y1={74} x2={560} y2={74} stroke="rgba(255,255,255,0.04)" strokeWidth={1} />
+
+      {/* Citation badge on last node */}
+      <rect x={404} y={rowY2 + nodeH / 2 + 6} width={nodeW} height={16} rx={4}
+        fill={`${accent}18`} stroke={`${accent}30`} strokeWidth={1} />
+      <text x={404 + nodeW / 2} y={rowY2 + nodeH / 2 + 17} textAnchor="middle" fill={accent} fontSize={8} fontWeight="600">
+        + source citation
+      </text>
+    </svg>
+  );
+}
+
 // ── Section Component ─────────────────────────────────────────────────────────
 interface SectionProps {
   number: string;
@@ -390,13 +477,29 @@ export default function RoadmapPanel() {
             Possible Next Features
           </h1>
           <p className="text-base text-neutral-400 leading-relaxed max-w-2xl">
-            Three ideas for improving the app using ML — none are built yet, but each would make studying more effective.
+            Four ideas for improving the app — none are built yet.
           </p>
         </div>
 
         {/* Sections */}
         <Section
           number="01"
+          title="RAG-Powered AI Tutor"
+          subtitle="Ground the chatbot in actual TABF and CFA source material"
+          description="Right now the AI tutor answers from its training data alone — it can't reference any TABF proprietary content, internal training materials, or Taiwan-specific banking regulations. RAG fixes this by giving the chatbot a searchable knowledge base it retrieves from on every message."
+          detail="The process has two parts. First, a one-time ingestion: TABF documents (PDFs, training materials, regulation texts) are split into ~500-token chunks, each chunk is embedded into a vector using OpenAI's embedding model, and stored in pgvector alongside the existing PostgreSQL database. Second, per chat message: the student's question is embedded with the same model, a cosine similarity search finds the 4–5 most relevant chunks, and those chunks are injected into the system prompt before the LLM responds. The LLM answer is now grounded in verified source material, and a source citation can be shown in the chat UI."
+          diagram={<RAGDiagram />}
+          accent="#06b6d4"
+          tags={["Retrieval-Augmented Generation", "pgvector", "TABF Knowledge Base"]}
+          outcomes={[
+            "Answers grounded in TABF and CFA materials, not just training data",
+            "Source citations shown in chat so students can verify",
+            "Proprietary TABF content becomes a competitive differentiator",
+          ]}
+        />
+
+        <Section
+          number="02"
           title="Spaced Repetition"
           subtitle="Learned forgetting-curve decay rates"
           description="The human brain forgets at a predictable exponential rate. Spaced repetition exploits this by scheduling each question for review at exactly the moment your retention is about to drop — right before you forget."
@@ -412,7 +515,7 @@ export default function RoadmapPanel() {
         />
 
         <Section
-          number="02"
+          number="03"
           title="Adaptive Difficulty Routing"
           subtitle="ε-greedy multi-armed bandit for topic selection"
           description="Instead of letting you choose which topic to study next (most people avoid their weak areas), an epsilon-greedy bandit model makes that decision — balancing targeted drilling with occasional exploration of untouched subjects."
@@ -428,7 +531,7 @@ export default function RoadmapPanel() {
         />
 
         <Section
-          number="03"
+          number="04"
           title="Wrong-Answer Pattern Detection"
           subtitle="Clustering to find why you fail, not just what you fail"
           description="Knowing you score 45% in Derivatives is only half the picture. Pattern detection clusters your incorrect answers into interpretable failure modes — so you know whether to re-read the textbook, practice arithmetic, or slow down when reading multi-part questions."
@@ -446,8 +549,9 @@ export default function RoadmapPanel() {
         {/* Implementation timeline */}
         <div className="border-t border-white/[0.06] pt-12 mt-4">
           <p className="text-[10px] uppercase tracking-widest text-neutral-600 font-semibold mb-6">Implementation Complexity</p>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
+              { label: "RAG Tutor", effort: "High", stack: "pgvector + embedding ingestion pipeline", time: "3–5 weeks" },
               { label: "Spaced Repetition", effort: "Medium", stack: "PostgreSQL scheduler + decay fitting", time: "2–3 weeks" },
               { label: "Adaptive Routing", effort: "Low–Medium", stack: "Stateless bandit in API route", time: "1–2 weeks" },
               { label: "Pattern Detection", effort: "High", stack: "Embedding model + k-means pipeline", time: "4–6 weeks" },
