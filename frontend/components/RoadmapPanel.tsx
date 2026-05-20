@@ -269,7 +269,7 @@ function RAGDiagram() {
   const nodeH = 36;
   const rx = 8;
   const arrowColor = "rgba(255,255,255,0.2)";
-  const accent = "#06b6d4";
+  const accent = "#E63C3A";
 
   // Ingestion row (top): one-time setup
   const ingestionNodes = [
@@ -489,7 +489,7 @@ export default function RoadmapPanel() {
           description="Right now the AI tutor answers from its training data alone — it can't reference any TABF proprietary content, internal training materials, or Taiwan-specific banking regulations. RAG fixes this by giving the chatbot a searchable knowledge base it retrieves from on every message."
           detail="The process has two parts. First, a one-time ingestion: TABF documents (PDFs, training materials, regulation texts) are split into ~500-token chunks, each chunk is embedded into a vector using OpenAI's embedding model, and stored in pgvector alongside the existing PostgreSQL database. Second, per chat message: the student's question is embedded with the same model, a cosine similarity search finds the 4–5 most relevant chunks, and those chunks are injected into the system prompt before the LLM responds. The LLM answer is now grounded in verified source material, and a source citation can be shown in the chat UI."
           diagram={<RAGDiagram />}
-          accent="#06b6d4"
+          accent="#E63C3A"
           tags={["Retrieval-Augmented Generation", "pgvector", "TABF Knowledge Base"]}
           outcomes={[
             "Answers grounded in TABF and CFA materials, not just training data",
@@ -500,22 +500,6 @@ export default function RoadmapPanel() {
 
         <Section
           number="02"
-          title="Spaced Repetition"
-          subtitle="Learned forgetting-curve decay rates"
-          description="The human brain forgets at a predictable exponential rate. Spaced repetition exploits this by scheduling each question for review at exactly the moment your retention is about to drop — right before you forget."
-          detail="Rather than using a fixed Leitner-box schedule (review after 1 day, 3 days, 7 days…), the ML model fits a personal decay constant λ per category from your own answer history. A question you consistently get right in Fixed Income is scheduled further out; one you keep failing in Derivatives is surfaced more aggressively. The result: the same study hours yield measurably higher retention."
-          diagram={<ForgettingCurveDiagram />}
-          accent="#E63C3A"
-          tags={["Retention Science", "Personalised Scheduling", "Exponential Decay"]}
-          outcomes={[
-            "Fewer re-studied questions that are already mastered",
-            "Higher exam-day recall for weak topics",
-            "Automatic interval lengthening as you improve",
-          ]}
-        />
-
-        <Section
-          number="03"
           title="Adaptive Difficulty Routing"
           subtitle="ε-greedy multi-armed bandit for topic selection"
           description="Instead of letting you choose which topic to study next (most people avoid their weak areas), an epsilon-greedy bandit model makes that decision — balancing targeted drilling with occasional exploration of untouched subjects."
@@ -531,13 +515,29 @@ export default function RoadmapPanel() {
         />
 
         <Section
+          number="03"
+          title="Spaced Repetition"
+          subtitle="Learned forgetting-curve decay rates"
+          description="The human brain forgets at a predictable exponential rate. Spaced repetition exploits this by scheduling each question for review at exactly the moment your retention is about to drop — right before you forget."
+          detail="Rather than using a fixed Leitner-box schedule (review after 1 day, 3 days, 7 days…), the ML model fits a personal decay constant λ per category from your own answer history. A question you consistently get right in Fixed Income is scheduled further out; one you keep failing in Derivatives is surfaced more aggressively. The result: the same study hours yield measurably higher retention."
+          diagram={<ForgettingCurveDiagram />}
+          accent="#6366f1"
+          tags={["Retention Science", "Personalised Scheduling", "Exponential Decay"]}
+          outcomes={[
+            "Fewer re-studied questions that are already mastered",
+            "Higher exam-day recall for weak topics",
+            "Automatic interval lengthening as you improve",
+          ]}
+        />
+
+        <Section
           number="04"
           title="Wrong-Answer Pattern Detection"
           subtitle="Clustering to find why you fail, not just what you fail"
           description="Knowing you score 45% in Derivatives is only half the picture. Pattern detection clusters your incorrect answers into interpretable failure modes — so you know whether to re-read the textbook, practice arithmetic, or slow down when reading multi-part questions."
           detail="Each wrong answer is encoded using a small language model into a feature vector capturing: the question's concept domain, the distractor you chose, and the time you spent. K-means clustering groups your mistakes into 3–6 categories. A lightweight LLM then labels each cluster with a human-readable insight: 'You confuse modified duration with Macaulay duration in Fixed Income' or 'You select the right formula but miscalculate under time pressure in TVM.' This converts raw wrong answers into a targeted study plan."
           diagram={<ClusterDiagram />}
-          accent="#6366f1"
+          accent="#06b6d4"
           tags={["NLP Embeddings", "K-Means Clustering", "Explainable AI"]}
           outcomes={[
             "Root-cause diagnosis, not just topic scores",
@@ -552,8 +552,8 @@ export default function RoadmapPanel() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {[
               { label: "RAG Tutor", effort: "High", stack: "pgvector + embedding ingestion pipeline", time: "3–5 weeks" },
-              { label: "Spaced Repetition", effort: "Medium", stack: "PostgreSQL scheduler + decay fitting", time: "2–3 weeks" },
               { label: "Adaptive Routing", effort: "Low–Medium", stack: "Stateless bandit in API route", time: "1–2 weeks" },
+              { label: "Spaced Repetition", effort: "Medium", stack: "PostgreSQL scheduler + decay fitting", time: "2–3 weeks" },
               { label: "Pattern Detection", effort: "High", stack: "Embedding model + k-means pipeline", time: "4–6 weeks" },
             ].map((item) => (
               <div key={item.label} className="p-4 rounded-2xl bg-surface-1 border border-white/[0.06]">
